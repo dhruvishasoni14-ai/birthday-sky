@@ -159,7 +159,7 @@ app.delete('/api/records/:store/:id', async (req, res) => {
   }
 });
 
-if (process.env.VERCEL !== '1') {
+if (process.env.VERCEL !== '1' && process.env.NETLIFY !== 'true') {
   app.listen(port, () => console.log(`[api] PostgreSQL API listening on :${port}`));
 }
 

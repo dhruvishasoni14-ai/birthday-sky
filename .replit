@@ -1,0 +1,12 @@
+run = "npm run start"
+entrypoint = "server/index.ts"
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["sh", "-c", "npx tsx server/index.ts & npx vite --host 0.0.0.0 --port 3000"]
+
+[ports]
+3000 = "HTTP"
+8787 = "HTTP"

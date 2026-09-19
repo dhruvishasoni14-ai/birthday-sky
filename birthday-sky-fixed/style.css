@@ -1,0 +1,4736 @@
+/* =====================================================
+   GOOGLE FONTS
+===================================================== */
+
+@import url(
+    'https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap'
+);
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+
+    margin:
+        0;
+
+    padding:
+        0;
+
+    box-sizing:
+        border-box;
+
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body {
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            #10102a 0%,
+            #070719 45%,
+            #03030d 100%
+        );
+
+    color:
+        white;
+
+    overflow:
+        hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+}
+
+
+/* =====================================================
+   SKY
+===================================================== */
+
+#sky {
+
+    width:
+        100vw;
+
+    height:
+        100vh;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    cursor:
+        grab;
+
+    touch-action:
+        none;
+
+    user-select:
+        none;
+
+}
+
+
+#sky:active {
+
+    cursor:
+        grabbing;
+
+}
+
+
+/* =====================================================
+   SPACE
+===================================================== */
+
+#space {
+
+    position:
+        absolute;
+
+    width:
+        300vw;
+
+    height:
+        300vh;
+
+    left:
+        -100vw;
+
+    top:
+        -100vh;
+
+    will-change:
+        transform;
+
+}
+
+
+/* =====================================================
+   STARS
+===================================================== */
+
+.star {
+
+    position:
+        absolute;
+
+    background:
+        white;
+
+    border-radius:
+        50%;
+
+    pointer-events:
+        none;
+
+}
+
+
+.twinkle {
+
+    animation:
+        twinkle 3s ease-in-out infinite;
+
+}
+
+
+@keyframes twinkle {
+
+    0% {
+
+        opacity:
+            0.2;
+
+        transform:
+            scale(1);
+
+    }
+
+
+    50% {
+
+        opacity:
+            0.9;
+
+        transform:
+            scale(1.8);
+
+    }
+
+
+    100% {
+
+        opacity:
+            0.2;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+.bright-star {
+
+    box-shadow:
+        0 0 8px rgba(255,255,255,0.7);
+
+}
+
+
+/* =====================================================
+   NEBULA
+===================================================== */
+
+.nebula {
+
+    position:
+        absolute;
+
+    border-radius:
+        50%;
+
+    filter:
+        blur(80px);
+
+    pointer-events:
+        none;
+
+    opacity:
+        0.08;
+
+}
+
+
+.nebula-one {
+
+    width:
+        500px;
+
+    height:
+        300px;
+
+    left:
+        15%;
+
+    top:
+        20%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(100,80,255,0.8),
+            rgba(100,80,255,0)
+        );
+
+}
+
+
+.nebula-two {
+
+    width:
+        600px;
+
+    height:
+        350px;
+
+    left:
+        60%;
+
+    top:
+        55%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(180,80,255,0.6),
+            rgba(180,80,255,0)
+        );
+
+}
+
+
+/* =====================================================
+   MOON
+===================================================== */
+
+.moon {
+
+    position:
+        absolute;
+
+    width:
+        110px;
+
+    height:
+        110px;
+
+    border-radius:
+        50%;
+
+    left:
+        45%;
+
+    top:
+        35%;
+
+    opacity:
+        0.5;
+
+    background:
+        radial-gradient(
+            circle at 35% 35%,
+            #ffffff,
+            #d8d8e8 55%,
+            #a9a9bd
+        );
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.15),
+        0 0 60px rgba(200,200,255,0.08);
+
+    pointer-events:
+        none;
+
+}
+
+
+/* =====================================================
+   SHOOTING STAR
+===================================================== */
+
+.shooting-star {
+
+    position:
+        absolute;
+
+    width:
+        100px;
+
+    height:
+        2px;
+
+    border-radius:
+        999px;
+
+    background:
+        linear-gradient(
+            to right,
+            rgba(255,255,255,0.95),
+            rgba(255,255,255,0)
+        );
+
+    transform:
+        rotate(-45deg);
+
+    transform-origin:
+        left center;
+
+    box-shadow:
+        0 0 6px rgba(255,255,255,0.45);
+
+    animation:
+        shooting 1.25s linear forwards;
+
+    pointer-events:
+        none;
+
+}
+
+
+@keyframes shooting {
+
+    0% {
+
+        transform:
+            translate(0,0)
+            rotate(-45deg)
+            scaleX(0.15);
+
+        opacity:
+            0;
+
+    }
+
+
+    10% {
+
+        opacity:
+            1;
+
+    }
+
+
+    70% {
+
+        opacity:
+            0.95;
+
+    }
+
+
+    100% {
+
+        transform:
+            translate(-380px,380px)
+            rotate(-45deg)
+            scaleX(1);
+
+        opacity:
+            0;
+
+    }
+
+}
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.statistics {
+
+    position:
+        fixed;
+
+    left:
+        30px;
+
+    bottom:
+        30px;
+
+    display:
+        flex;
+
+    gap:
+        22px;
+
+    padding:
+        14px 20px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    border-radius:
+        18px;
+
+    backdrop-filter:
+        blur(12px);
+
+    z-index:
+        120;
+
+}
+
+
+.stat-item {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    min-width:
+        55px;
+
+    color:
+        white;
+
+    background:
+        transparent;
+
+    border:
+        none;
+
+    font-family:
+        inherit;
+
+}
+
+
+.stat-item span {
+
+    font-size:
+        18px;
+
+}
+
+
+.stat-item small {
+
+    margin-top:
+        4px;
+
+    font-size:
+        10px;
+
+    opacity:
+        0.55;
+
+}
+
+
+.unopened-stat {
+
+    cursor:
+        pointer;
+
+    border-radius:
+        10px;
+
+}
+
+
+.unopened-stat.has-unopened span {
+
+    animation:
+        unopenedPulse 1.8s ease-in-out infinite;
+
+}
+
+
+.unopened-stat.has-unopened small {
+
+    opacity:
+        0.9;
+
+}
+
+
+@keyframes unopenedPulse {
+
+    0%,
+    100% {
+
+        text-shadow:
+            0 0 4px rgba(255,255,255,0.2);
+
+    }
+
+
+    50% {
+
+        text-shadow:
+            0 0 16px rgba(255,255,255,0.9),
+            0 0 28px rgba(190,175,255,0.5);
+
+    }
+
+}
+
+
+/* =====================================================
+   ACCOUNT BUTTON
+===================================================== */
+
+.account-button {
+
+    position:
+        fixed;
+
+    right:
+        30px;
+
+    top:
+        28px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    padding:
+        7px 11px 7px 7px;
+
+    border:
+        1px solid rgba(255,255,255,0.14);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+    backdrop-filter:
+        blur(12px);
+
+    z-index:
+        150;
+
+}
+
+
+.account-avatar {
+
+    width:
+        30px;
+
+    height:
+        30px;
+
+    border-radius:
+        50%;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    overflow:
+        hidden;
+
+    background:
+        rgba(255,255,255,0.1);
+
+}
+
+
+.account-avatar img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+}
+
+
+.account-button-label {
+
+    font-size:
+        10px;
+
+    opacity:
+        0.75;
+
+}
+
+
+/* =====================================================
+   PLUS
+===================================================== */
+
+#addWish {
+
+    position:
+        fixed;
+
+    right:
+        35px;
+
+    bottom:
+        35px;
+
+    width:
+        58px;
+
+    height:
+        58px;
+
+    border-radius:
+        50%;
+
+    border:
+        1px solid rgba(255,255,255,0.18);
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color:
+        white;
+
+    font-size:
+        30px;
+
+    cursor:
+        pointer;
+
+    backdrop-filter:
+        blur(12px);
+
+    z-index:
+        150;
+
+}
+
+
+#addWish:hover {
+
+    transform:
+        scale(1.08);
+
+}
+
+
+/* =====================================================
+   ELEMENT MENU
+===================================================== */
+
+.element-menu {
+
+    position:
+        fixed;
+
+    right:
+        35px;
+
+    bottom:
+        105px;
+
+    width:
+        285px;
+
+    padding:
+        14px;
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    border-radius:
+        22px;
+
+    background:
+        rgba(16,16,35,0.86);
+
+    backdrop-filter:
+        blur(22px);
+
+    z-index:
+        180;
+
+}
+
+
+.element-menu.hidden {
+
+    display:
+        none;
+
+}
+
+
+.element-menu-title {
+
+    padding:
+        3px 5px 10px;
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1.4px;
+
+    opacity:
+        0.4;
+
+}
+
+
+.element-option {
+
+    width:
+        100%;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+    padding:
+        11px;
+
+    margin-top:
+        5px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color:
+        white;
+
+    text-align:
+        left;
+
+    cursor:
+        pointer;
+
+}
+
+
+.element-option:hover {
+
+    background:
+        rgba(255,255,255,0.09);
+
+}
+
+
+.future-element {
+
+    opacity:
+        0.35;
+
+    cursor:
+        not-allowed;
+
+}
+
+
+.element-icon {
+
+    width:
+        35px;
+
+    height:
+        35px;
+
+    border-radius:
+        12px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color:
+        #b89cff;
+
+}
+
+
+.element-option-text {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+
+}
+
+
+.element-option-text strong {
+
+    font-size:
+        11px;
+
+    font-weight:
+        500;
+
+}
+
+
+.element-option-text small {
+
+    font-size:
+        9px;
+
+    opacity:
+        0.4;
+
+    line-height:
+        1.4;
+
+}
+
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+#wishStudio,
+.overlay-modal,
+#constellationStudio {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        24px;
+
+    background:
+        rgba(2,2,12,0.48);
+
+    backdrop-filter:
+        blur(7px);
+
+    z-index:
+        300;
+
+}
+
+
+#wishStudio.hidden,
+.overlay-modal.hidden,
+#constellationStudio.hidden {
+
+    display:
+        none;
+
+}
+
+
+/* =====================================================
+   CLOSE
+===================================================== */
+
+.close-button {
+
+    position:
+        absolute;
+
+    top:
+        17px;
+
+    right:
+        19px;
+
+    width:
+        38px;
+
+    height:
+        38px;
+
+    border-radius:
+        50%;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    background:
+        rgba(255,255,255,0.05);
+
+    color:
+        white;
+
+    font-size:
+        24px;
+
+    cursor:
+        pointer;
+
+    z-index:
+        50;
+
+}
+
+
+/* =====================================================
+   WISH WINDOW
+===================================================== */
+
+.wish-window {
+
+    width:
+        min(1180px,95vw);
+
+    height:
+        min(92vh,900px);
+
+    overflow:
+        auto;
+
+    padding:
+        38px 40px;
+
+    border-radius:
+        34px;
+
+    position:
+        relative;
+
+    background:
+        rgba(17,17,35,0.70);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.45);
+
+    backdrop-filter:
+        blur(28px);
+
+}
+
+
+/* =====================================================
+   RESET BUTTON
+===================================================== */
+
+.reset-card-button {
+
+    position:
+        absolute;
+
+    top:
+        23px;
+
+    right:
+        68px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color:
+        rgba(255,255,255,0.42);
+
+    padding:
+        6px 10px;
+
+    font-size:
+        9px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.reset-card-button:hover {
+
+    color:
+        white;
+
+    background:
+        rgba(255,255,255,0.08);
+
+}
+
+
+/* =====================================================
+   HEADINGS
+===================================================== */
+
+.studio-heading,
+.constellation-heading,
+.account-heading {
+
+    padding-right:
+        70px;
+
+    margin-bottom:
+        25px;
+
+}
+
+
+.eyebrow {
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        2px;
+
+    opacity:
+        0.35;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.studio-heading h1,
+.constellation-heading h1,
+.account-heading h1 {
+
+    font-size:
+        32px;
+
+    font-weight:
+        400;
+
+}
+
+
+.studio-heading p,
+.constellation-heading p,
+.account-heading p {
+
+    margin-top:
+        8px;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.6;
+
+    opacity:
+        0.45;
+
+}
+
+
+/* =====================================================
+   STUDIO
+===================================================== */
+
+.studio-layout {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(390px,0.9fr)
+        minmax(450px,1.1fr);
+
+    gap:
+        36px;
+
+    align-items:
+        start;
+
+}
+
+
+.creator-panel {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        18px;
+
+}
+
+
+.editor-section {
+
+    padding-bottom:
+        18px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.06);
+
+}
+
+
+.editor-section:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+
+.section-heading {
+
+    font-size:
+        11px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1.6px;
+
+    opacity:
+        0.48;
+
+    margin-bottom:
+        13px;
+
+}
+
+
+.creator-panel label {
+
+    display:
+        block;
+
+    font-size:
+        10px;
+
+    opacity:
+        0.55;
+
+    margin-top:
+        11px;
+
+    margin-bottom:
+        7px;
+
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.creator-panel input[type="text"],
+.creator-panel textarea,
+.creator-panel select {
+
+    width:
+        100%;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    border-radius:
+        13px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    color:
+        white;
+
+    outline:
+        none;
+
+    font-family:
+        inherit;
+
+    font-size:
+        13px;
+
+}
+
+
+.creator-panel input[type="text"] {
+
+    height:
+        44px;
+
+    padding:
+        0 12px;
+
+}
+
+
+.creator-panel textarea {
+
+    height:
+        128px;
+
+    padding:
+        13px;
+
+    resize:
+        vertical;
+
+    line-height:
+        1.6;
+
+}
+
+
+.creator-panel textarea::placeholder,
+.creator-panel input::placeholder {
+
+    color:
+        rgba(255,255,255,0.25);
+
+}
+
+
+.creator-panel select {
+
+    height:
+        34px;
+
+    padding:
+        0 9px;
+
+    background:
+        #202038;
+
+    color:
+        white;
+
+    color-scheme:
+        dark;
+
+}
+
+
+.creator-panel select option {
+
+    background:
+        #202038;
+
+    color:
+        white;
+
+}
+
+
+/* =====================================================
+   TEXT SETTINGS
+===================================================== */
+
+.text-settings {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(125px,1fr)
+        minmax(100px,1.25fr);
+
+    gap:
+        8px;
+
+    margin-top:
+        7px;
+
+}
+
+
+.text-settings input[type="range"] {
+
+    width:
+        100%;
+
+    accent-color:
+        #b89cff;
+
+}
+
+
+.text-formatting {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    margin-top:
+        7px;
+
+}
+
+
+.format-button {
+
+    width:
+        31px;
+
+    height:
+        30px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius:
+        8px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    color:
+        rgba(255,255,255,0.68);
+
+    cursor:
+        pointer;
+
+}
+
+
+.format-button.active {
+
+    background:
+        rgba(255,255,255,0.14);
+
+    color:
+        white;
+
+}
+
+
+/* =====================================================
+   COLOUR
+===================================================== */
+
+.text-color-picker {
+
+    width:
+        31px !important;
+
+    height:
+        30px !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+
+    display:
+        flex !important;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    position:
+        relative;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    border-radius:
+        8px;
+
+    overflow:
+        hidden;
+
+}
+
+
+.text-color-picker span {
+
+    width:
+        15px;
+
+    height:
+        15px;
+
+    border-radius:
+        50%;
+
+    background:
+        white;
+
+}
+
+
+.text-color-picker input {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    opacity:
+        0;
+
+}
+
+
+/* =====================================================
+   STYLE CONTROLS
+===================================================== */
+
+.sub-label {
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.8px;
+
+    opacity:
+        0.35;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.background-label,
+.border-label,
+.color-label {
+
+    margin-top:
+        17px;
+
+}
+
+
+.theme-options,
+.background-options,
+.border-options {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        6px;
+
+}
+
+
+.theme-option,
+.background-option,
+.border-option {
+
+    padding:
+        7px 10px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color:
+        rgba(255,255,255,0.55);
+
+    font-size:
+        10px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.theme-option.active,
+.background-option.active,
+.border-option.active {
+
+    color:
+        white;
+
+    background:
+        rgba(255,255,255,0.1);
+
+    border-color:
+        rgba(255,255,255,0.25);
+
+}
+
+
+.theme-dot {
+
+    display:
+        inline-block;
+
+    width:
+        10px;
+
+    height:
+        10px;
+
+    border-radius:
+        50%;
+
+    margin-right:
+        5px;
+
+}
+
+
+.midnight {
+    background: #8178d2;
+}
+
+.blossom {
+    background: #ee99c6;
+}
+
+.ocean {
+    background: #5dc4dc;
+}
+
+.sunset {
+    background: #f2a06e;
+}
+
+.cosmic {
+    background: #aa77e8;
+}
+
+.candy {
+    background: #e77ca9;
+}
+
+
+/* =====================================================
+   COLOURS
+===================================================== */
+
+.color-row {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+
+}
+
+
+.color-swatch {
+
+    width:
+        27px;
+
+    height:
+        27px;
+
+    border-radius:
+        50%;
+
+    border:
+        2px solid transparent;
+
+    background:
+        var(--swatch);
+
+    cursor:
+        pointer;
+
+}
+
+
+.color-swatch.active {
+
+    border-color:
+        white;
+
+}
+
+
+.custom-color {
+
+    position:
+        relative;
+
+    width:
+        27px !important;
+
+    height:
+        27px !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+
+    border:
+        1px dashed rgba(255,255,255,0.3);
+
+    border-radius:
+        50%;
+
+    display:
+        flex !important;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    overflow:
+        hidden;
+
+}
+
+
+.custom-color input {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    opacity:
+        0;
+
+}
+
+
+/* =====================================================
+   STICKERS
+===================================================== */
+
+.sticker-tabs {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        6px;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.sticker-tab {
+
+    padding:
+        6px 9px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius:
+        999px;
+
+    background:
+        transparent;
+
+    color:
+        rgba(255,255,255,0.42);
+
+    font-size:
+        10px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.sticker-tab.active {
+
+    background:
+        rgba(255,255,255,0.09);
+
+    color:
+        white;
+
+}
+
+
+.sticker-tray {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(8,1fr);
+
+    gap:
+        7px;
+
+    padding:
+        9px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+}
+
+
+.sticker-button,
+.upload-sticker {
+
+    min-height:
+        42px;
+
+    border:
+        1px solid rgba(255,255,255,0.04);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+    font-size:
+        20px;
+
+}
+
+
+.upload-sticker {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.upload-sticker span {
+
+    font-size:
+        7px;
+
+    opacity:
+        0.45;
+
+}
+
+
+.my-stickers-container {
+
+    display:
+        none;
+
+}
+
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+.preview-panel {
+
+    position:
+        sticky;
+
+    top:
+        0;
+
+    align-self:
+        start;
+
+    z-index:
+        10;
+
+}
+
+
+.wish-preview {
+
+    --accent:
+        #B89CFF;
+
+    min-height:
+        540px;
+
+    width:
+        100%;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        28px;
+
+    padding:
+        0;
+
+    isolation:
+        isolate;
+
+    box-shadow:
+        inset 0 0 80px rgba(255,255,255,0.025),
+        0 22px 70px rgba(0,0,0,0.18);
+
+}
+
+
+/* =====================================================
+   THEMES
+===================================================== */
+
+.wish-preview.theme-midnight {
+
+    background:
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(140,125,255,0.42),
+            transparent 37%
+        ),
+        radial-gradient(
+            circle at 12% 88%,
+            rgba(80,75,190,0.25),
+            transparent 37%
+        ),
+        linear-gradient(
+            135deg,
+            #13122c,
+            #2b2853
+        );
+
+}
+
+
+.wish-preview.theme-blossom {
+
+    background:
+        radial-gradient(
+            circle at 82% 12%,
+            rgba(255,182,218,0.48),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 12% 88%,
+            rgba(220,122,179,0.28),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #422237,
+            #7d4569
+        );
+
+}
+
+
+.wish-preview.theme-ocean {
+
+    background:
+        radial-gradient(
+            circle at 82% 10%,
+            rgba(105,220,238,0.45),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 12% 88%,
+            rgba(55,145,175,0.3),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #0c2a37,
+            #1d6277
+        );
+
+}
+
+
+.wish-preview.theme-sunset {
+
+    background:
+        radial-gradient(
+            circle at 82% 10%,
+            rgba(255,193,120,0.48),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 12% 88%,
+            rgba(222,104,91,0.28),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #4c2732,
+            #8c4c36
+        );
+
+}
+
+
+.wish-preview.theme-cosmic {
+
+    background:
+        radial-gradient(
+            circle at 82% 10%,
+            rgba(196,133,255,0.5),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 12% 88%,
+            rgba(93,69,195,0.3),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #17132f,
+            #492461
+        );
+
+}
+
+
+.wish-preview.theme-candy {
+
+    background:
+        radial-gradient(
+            circle at 82% 10%,
+            rgba(255,175,220,0.48),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 12% 88%,
+            rgba(238,105,171,0.3),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #492136,
+            #884164
+        );
+
+}
+
+
+/* =====================================================
+   TEXTURES
+   SCRAPBOOK = FADED CIRCLES AGAIN
+===================================================== */
+
+.background-texture {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        1;
+
+    pointer-events:
+        none;
+
+}
+
+
+.wish-preview.background-plain
+.background-texture {
+
+    opacity:
+        0;
+
+}
+
+
+.wish-preview.background-notebook
+.background-texture {
+
+    opacity:
+        0.82;
+
+    background-image:
+
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(255,255,255,0.13) 32px,
+            transparent 33px
+        ),
+
+        linear-gradient(
+            to right,
+            transparent 0,
+            transparent 47px,
+            rgba(255,110,135,0.3) 48px,
+            transparent 49px
+        );
+
+    background-size:
+        100% 33px,
+        100% 100%;
+
+}
+
+
+.wish-preview.background-stardust
+.background-texture {
+
+    opacity:
+        0.65;
+
+    background-image:
+
+        radial-gradient(
+            rgba(255,255,255,0.30)
+            0.7px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            rgba(255,255,255,0.17)
+            1px,
+            transparent 1.4px
+        );
+
+    background-size:
+        17px 17px,
+        39px 39px;
+
+}
+
+
+/*
+   RESTORED SCRAPBOOK:
+   soft faded circles, NO diagonal lines.
+*/
+
+.wish-preview.background-scrapbook
+.background-texture {
+
+    opacity:
+        0.75;
+
+    background-image:
+
+        radial-gradient(
+            circle at 13% 18%,
+            rgba(255,255,255,0.10) 0 24px,
+            transparent 25px
+        ),
+
+        radial-gradient(
+            circle at 33% 72%,
+            rgba(255,255,255,0.07) 0 34px,
+            transparent 35px
+        ),
+
+        radial-gradient(
+            circle at 76% 25%,
+            rgba(255,255,255,0.08) 0 29px,
+            transparent 30px
+        ),
+
+        radial-gradient(
+            circle at 88% 78%,
+            rgba(255,255,255,0.07) 0 38px,
+            transparent 39px
+        ),
+
+        radial-gradient(
+            circle at 55% 45%,
+            rgba(255,255,255,0.035) 0 70px,
+            transparent 71px
+        );
+
+    background-size:
+        100% 100%;
+
+    filter:
+        blur(0.2px);
+
+}
+
+
+/* =====================================================
+   FRAMES
+===================================================== */
+
+.card-frame {
+
+    position:
+        absolute;
+
+    inset:
+        19px;
+
+    z-index:
+        4;
+
+    pointer-events:
+        none;
+
+    border-radius:
+        19px;
+
+}
+
+
+.card-frame.border-none {
+
+    border:
+        none;
+
+}
+
+
+.card-frame.border-single {
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--accent) 58%,
+            white
+        );
+
+    opacity:
+        0.76;
+
+}
+
+
+.card-frame.border-dotted {
+
+    border:
+        2px dotted
+        color-mix(
+            in srgb,
+            var(--accent) 60%,
+            white
+        );
+
+    opacity:
+        0.72;
+
+}
+
+
+.card-frame.border-heart-scribble {
+
+    inset:
+        24px;
+
+    border:
+        none;
+
+}
+
+
+.card-frame.border-heart-scribble::before {
+
+    content:
+        "♡  ───  ♡  ─────  ♡  ───  ♡";
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        -10px;
+
+    transform:
+        translateX(-50%);
+
+    white-space:
+        nowrap;
+
+    color:
+        var(--accent);
+
+    font-size:
+        15px;
+
+    opacity:
+        0.8;
+
+}
+
+
+.card-frame.border-heart-scribble::after {
+
+    content:
+        "♡  ───  ♡  ─────  ♡  ───  ♡";
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        -10px;
+
+    transform:
+        translateX(-50%);
+
+    white-space:
+        nowrap;
+
+    color:
+        var(--accent);
+
+    font-size:
+        15px;
+
+    opacity:
+        0.7;
+
+}
+
+
+.card-frame.border-wavy-bow {
+
+    inset:
+        25px;
+
+    border:
+        none;
+
+}
+
+
+.card-frame.border-wavy-bow::before {
+
+    content:
+        "〰〰〰〰〰    🎀    〰〰〰〰〰";
+
+    position:
+        absolute;
+
+    top:
+        -10px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    white-space:
+        nowrap;
+
+    color:
+        var(--accent);
+
+    font-size:
+        13px;
+
+    opacity:
+        0.78;
+
+}
+
+
+.card-frame.border-wavy-bow::after {
+
+    content:
+        "〰〰〰〰〰    ♡    〰〰〰〰〰";
+
+    position:
+        absolute;
+
+    bottom:
+        -10px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%)
+        rotate(180deg);
+
+    white-space:
+        nowrap;
+
+    color:
+        var(--accent);
+
+    font-size:
+        13px;
+
+    opacity:
+        0.7;
+
+}
+
+
+.card-frame.border-star-trail {
+
+    inset:
+        22px;
+
+    border:
+        none;
+
+}
+
+
+.card-frame.border-star-trail::before {
+
+    content:
+        "✦   ─   ☆   ─   ✦   ─   ☆   ─   ✦";
+
+    position:
+        absolute;
+
+    top:
+        -9px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    white-space:
+        nowrap;
+
+    color:
+        var(--accent);
+
+    font-size:
+        12px;
+
+    opacity:
+        0.8;
+
+}
+
+
+.card-frame.border-star-trail::after {
+
+    content:
+        "✦   ─   ☆   ─   ✦   ─   ☆   ─   ✦";
+
+    position:
+        absolute;
+
+    bottom:
+        -9px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%)
+        rotate(180deg);
+
+    white-space:
+        nowrap;
+
+    color:
+        var(--accent);
+
+    font-size:
+        12px;
+
+    opacity:
+        0.72;
+
+}
+
+
+.card-frame.border-botanical-corners {
+
+    inset:
+        22px;
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--accent) 20%,
+            transparent
+        );
+
+}
+
+
+.card-frame.border-botanical-corners::before {
+
+    content:
+        "🌿  ❀";
+
+    position:
+        absolute;
+
+    left:
+        -4px;
+
+    top:
+        -11px;
+
+    font-size:
+        26px;
+
+    opacity:
+        0.7;
+
+}
+
+
+.card-frame.border-botanical-corners::after {
+
+    content:
+        "❀  🌿";
+
+    position:
+        absolute;
+
+    right:
+        -4px;
+
+    bottom:
+        -11px;
+
+    font-size:
+        26px;
+
+    transform:
+        rotate(170deg);
+
+    opacity:
+        0.7;
+
+}
+
+
+.card-frame.border-botanical-bow {
+
+    inset:
+        24px;
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--accent) 18%,
+            transparent
+        );
+
+}
+
+
+.card-frame.border-botanical-bow::before {
+
+    content:
+        "🌿 ─── ❀  🎀  ❀ ─── 🌿";
+
+    position:
+        absolute;
+
+    top:
+        -12px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    white-space:
+        nowrap;
+
+    font-size:
+        13px;
+
+    color:
+        var(--accent);
+
+    opacity:
+        0.8;
+
+}
+
+
+.card-frame.border-botanical-bow::after {
+
+    content:
+        "🌿 ─── ❀  ♡  ❀ ─── 🌿";
+
+    position:
+        absolute;
+
+    bottom:
+        -12px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%)
+        rotate(180deg);
+
+    white-space:
+        nowrap;
+
+    font-size:
+        12px;
+
+    color:
+        var(--accent);
+
+    opacity:
+        0.7;
+
+}
+
+
+.card-frame.border-minimal-ornamental {
+
+    inset:
+        22px;
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--accent) 24%,
+            transparent
+        );
+
+}
+
+
+.card-frame.border-minimal-ornamental::before {
+
+    content:
+        "──── ✧";
+
+    position:
+        absolute;
+
+    top:
+        -8px;
+
+    left:
+        -2px;
+
+    color:
+        var(--accent);
+
+    font-size:
+        14px;
+
+    opacity:
+        0.72;
+
+}
+
+
+.card-frame.border-minimal-ornamental::after {
+
+    content:
+        "✧ ────";
+
+    position:
+        absolute;
+
+    bottom:
+        -8px;
+
+    right:
+        -2px;
+
+    color:
+        var(--accent);
+
+    font-size:
+        14px;
+
+    opacity:
+        0.72;
+
+}
+
+
+/* =====================================================
+   CARD TEXT
+===================================================== */
+
+.draggable-text {
+
+    position:
+        absolute;
+
+    z-index:
+        7;
+
+    cursor:
+        grab;
+
+    touch-action:
+        none;
+
+    user-select:
+        none;
+
+    transform:
+        translate(-50%,-50%);
+
+    text-align:
+        center;
+
+}
+
+
+.draggable-text:active {
+
+    cursor:
+        grabbing;
+
+}
+
+
+.draggable-text.text-selected {
+
+    text-shadow:
+        0 0 12px
+        color-mix(
+            in srgb,
+            var(--accent) 38%,
+            transparent
+        );
+
+}
+
+
+.card-title {
+
+    width:
+        max-content;
+
+    max-width:
+        86%;
+
+    font-size:
+        32px;
+
+    line-height:
+        1.18;
+
+    color:
+        color-mix(
+            in srgb,
+            var(--accent) 62%,
+            white
+        );
+
+}
+
+
+.card-body {
+
+    width:
+        min(78%,460px);
+
+    font-size:
+        18px;
+
+    line-height:
+        1.8;
+
+    white-space:
+        pre-wrap;
+
+    overflow-wrap:
+        anywhere;
+
+}
+
+
+.placeholder-message {
+
+    opacity:
+        0.48;
+
+}
+
+
+.card-from {
+
+    width:
+        max-content;
+
+    max-width:
+        70%;
+
+    font-size:
+        17px;
+
+    opacity:
+        0.78;
+
+}
+
+
+.accent-line {
+
+    position:
+        absolute;
+
+    bottom:
+        76px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        48px;
+
+    height:
+        1px;
+
+    background:
+        var(--accent);
+
+    opacity:
+        0.55;
+
+    z-index:
+        6;
+
+}
+
+
+/* =====================================================
+   FONTS
+===================================================== */
+
+.font-elegant {
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+}
+
+
+.font-typewriter {
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+}
+
+
+.font-handwritten {
+
+    font-family:
+        "Segoe Print",
+        "Comic Sans MS",
+        cursive;
+
+}
+
+
+.font-dancing {
+
+    font-family:
+        "Dancing Script",
+        cursive;
+
+}
+
+
+.font-caveat {
+
+    font-family:
+        "Caveat",
+        cursive;
+
+}
+
+
+.font-abril {
+
+    font-family:
+        "Abril Fatface",
+        Georgia,
+        serif;
+
+}
+
+
+.font-pristina {
+
+    font-family:
+        "Pristina",
+        "Segoe Script",
+        cursive;
+
+}
+
+
+/* =====================================================
+   TEXT CONTROL
+===================================================== */
+
+.text-control-panel {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        16px;
+
+    transform:
+        translateX(-50%);
+
+    z-index:
+        40;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    padding:
+        7px 9px;
+
+    border:
+        1px solid rgba(255,255,255,0.13);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(12,12,28,0.72);
+
+    backdrop-filter:
+        blur(14px);
+
+}
+
+
+.text-control-panel.hidden {
+
+    display:
+        none;
+
+}
+
+
+.selected-text-label {
+
+    min-width:
+        55px;
+
+    font-size:
+        9px;
+
+    opacity:
+        0.6;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.text-control-panel button {
+
+    width:
+        28px;
+
+    height:
+        28px;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    border-radius:
+        8px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+}
+
+
+.text-control-panel input[type="range"] {
+
+    width:
+        90px;
+
+    accent-color:
+        var(--accent);
+
+}
+
+
+/* =====================================================
+   CARD STICKER
+===================================================== */
+
+.card-sticker {
+
+    position:
+        absolute;
+
+    line-height:
+        1;
+
+    user-select:
+        none;
+
+    cursor:
+        grab;
+
+    touch-action:
+        none;
+
+    transform-origin:
+        center center;
+
+}
+
+
+.card-sticker.selected {
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            var(--accent)
+        );
+
+}
+
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.sticker-toolbar {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    margin-top:
+        10px;
+
+    padding:
+        8px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    backdrop-filter:
+        blur(12px);
+
+}
+
+
+.sticker-toolbar.hidden {
+
+    display:
+        none;
+
+}
+
+
+.sticker-toolbar button {
+
+    width:
+        31px;
+
+    height:
+        31px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius:
+        9px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+}
+
+
+.tool-divider {
+
+    width:
+        1px;
+
+    height:
+        18px;
+
+    background:
+        rgba(255,255,255,0.1);
+
+}
+
+
+/* =====================================================
+   HINT
+===================================================== */
+
+.text-drag-hint {
+
+    text-align:
+        center;
+
+    margin-top:
+        8px;
+
+    font-size:
+        9px;
+
+    opacity:
+        0.3;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.studio-footer {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    margin-top:
+        23px;
+
+    padding-top:
+        19px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.07);
+
+}
+
+
+.footer-text {
+
+    font-size:
+        10px;
+
+    opacity:
+        0.3;
+
+}
+
+
+.continue-button,
+.account-primary-button,
+.account-secondary-button,
+.account-link-button {
+
+    border:
+        1px solid rgba(255,255,255,0.14);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color:
+        white;
+
+    padding:
+        11px 17px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        11px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.account-secondary-button {
+
+    background:
+        rgba(255,255,255,0.04);
+
+}
+
+
+.account-link-button {
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    opacity:
+        0.55;
+
+}
+
+
+/* =====================================================
+   ACCOUNT
+===================================================== */
+
+.account-window {
+
+    width:
+        min(450px,94vw);
+
+    max-height:
+        92vh;
+
+    overflow-y:
+        auto;
+
+    padding:
+        38px;
+
+    border-radius:
+        30px;
+
+    position:
+        relative;
+
+    background:
+        rgba(17,17,35,0.80);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.45);
+
+    backdrop-filter:
+        blur(28px);
+
+}
+
+
+.account-view,
+.account-form,
+.account-profile {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+
+}
+
+
+.account-view.hidden,
+.account-form.hidden,
+.account-profile.hidden {
+
+    display:
+        none;
+
+}
+
+
+.profile-upload-area {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+}
+
+
+.profile-preview,
+.profile-page-image {
+
+    width:
+        88px;
+
+    height:
+        88px;
+
+    border-radius:
+        50%;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    overflow:
+        hidden;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid rgba(255,255,255,0.14);
+
+}
+
+
+.profile-preview img,
+.profile-page-image img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+}
+
+
+.profile-upload-button {
+
+    padding:
+        8px 12px;
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    cursor:
+        pointer;
+
+    font-size:
+        10px !important;
+
+}
+
+
+.profile-stats {
+
+    display:
+        flex;
+
+    gap:
+        25px;
+
+    margin:
+        7px 0 11px;
+
+}
+
+
+.profile-stats div {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+}
+
+
+.profile-stats strong {
+
+    font-size:
+        18px;
+
+    font-weight:
+        400;
+
+}
+
+
+.profile-stats small {
+
+    margin-top:
+        3px;
+
+    font-size:
+        9px;
+
+    opacity:
+        0.4;
+
+}
+
+
+.user-constellation-list {
+
+    width:
+        100%;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+
+    margin:
+        7px 0;
+
+}
+
+
+.saved-constellation {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        8px;
+
+    padding:
+        10px 11px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+}
+
+
+.saved-constellation-info {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+
+    min-width:
+        0;
+
+}
+
+
+.saved-constellation-info strong {
+
+    font-size:
+        10px;
+
+    font-weight:
+        500;
+
+}
+
+
+.saved-constellation-info small {
+
+    font-size:
+        8px;
+
+    opacity:
+        0.4;
+
+}
+
+
+.saved-constellation-actions {
+
+    display:
+        flex;
+
+    gap:
+        5px;
+
+}
+
+
+.saved-constellation-actions button {
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius:
+        8px;
+
+    padding:
+        5px 7px;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    color:
+        white;
+
+    font-size:
+        8px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.saved-constellation-actions .delete-constellation {
+
+    color:
+        #ff9cad;
+
+}
+
+
+.empty-account-message {
+
+    padding:
+        20px;
+
+    text-align:
+        center;
+
+    font-size:
+        10px;
+
+    opacity:
+        0.3;
+
+}
+
+
+/* =====================================================
+   CONSTELLATION
+===================================================== */
+
+.constellation-window {
+
+    width:
+        min(1150px,95vw);
+
+    max-height:
+        94vh;
+
+    overflow-y:
+        auto;
+
+    padding:
+        34px;
+
+    border-radius:
+        30px;
+
+    position:
+        relative;
+
+    background:
+        rgba(12,13,31,0.82);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.45);
+
+    backdrop-filter:
+        blur(28px);
+
+}
+
+
+.constellation-layout {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        250px 1fr;
+
+    gap:
+        22px;
+
+}
+
+
+.constellation-tools {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        9px;
+
+}
+
+
+.constellation-tools label {
+
+    font-size:
+        10px;
+
+    opacity:
+        0.48;
+
+}
+
+
+.constellation-tools input {
+
+    height:
+        42px;
+
+    padding:
+        0 11px;
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    color:
+        white;
+
+    outline:
+        none;
+
+}
+
+
+.constellation-tool-group {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        6px;
+
+    margin-top:
+        7px;
+
+}
+
+
+.constellation-tool {
+
+    padding:
+        10px 11px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color:
+        rgba(255,255,255,0.55);
+
+    cursor:
+        pointer;
+
+    text-align:
+        left;
+
+}
+
+
+.constellation-tool.active {
+
+    background:
+        rgba(255,255,255,0.11);
+
+    color:
+        white;
+
+    border-color:
+        rgba(255,255,255,0.24);
+
+}
+
+
+.constellation-help {
+
+    margin-top:
+        13px;
+
+    padding:
+        13px;
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+}
+
+
+.constellation-help strong {
+
+    font-size:
+        10px;
+
+}
+
+
+.constellation-help p {
+
+    margin-top:
+        6px;
+
+    font-size:
+        9px;
+
+    line-height:
+        1.55;
+
+    opacity:
+        0.4;
+
+}
+
+
+/* =====================================================
+   CONSTELLATION CANVAS
+===================================================== */
+
+.constellation-canvas {
+
+    min-height:
+        540px;
+
+    height:
+        min(65vh,600px);
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius:
+        24px;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(105,95,190,0.12),
+            transparent 55%
+        ),
+
+        linear-gradient(
+            135deg,
+            #09091c,
+            #11112b
+        );
+
+    touch-action:
+        none;
+
+}
+
+
+.constellation-canvas::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    pointer-events:
+        none;
+
+    background-image:
+        radial-gradient(
+            rgba(255,255,255,0.16)
+            0.7px,
+            transparent 0.9px
+        );
+
+    background-size:
+        21px 21px;
+
+    opacity:
+        0.38;
+
+}
+
+
+.constellation-empty-message {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:
+        max-content;
+
+    max-width:
+        80%;
+
+    text-align:
+        center;
+
+    font-size:
+        11px;
+
+    opacity:
+        0.3;
+
+    pointer-events:
+        none;
+
+}
+
+
+.constellation-star {
+
+    position:
+        absolute;
+
+    width:
+        25px;
+
+    height:
+        25px;
+
+    padding:
+        0;
+
+    transform:
+        translate(-50%,-50%);
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        white;
+
+    font-size:
+        20px;
+
+    cursor:
+        pointer;
+
+    z-index:
+        5;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.75);
+
+}
+
+
+.constellation-star.selected {
+
+    color:
+        #d8ccff;
+
+    text-shadow:
+        0 0 14px #c0aeff;
+
+}
+
+
+.constellation-line {
+
+    position:
+        absolute;
+
+    height:
+        1px;
+
+    transform-origin:
+        left center;
+
+    background:
+        rgba(205,195,255,0.65);
+
+    z-index:
+        2;
+
+    pointer-events:
+        none;
+
+}
+
+
+/* =====================================================
+   SKY CONSTELLATIONS
+===================================================== */
+
+.sky-constellation {
+
+    position:
+        absolute;
+
+    width:
+        170px;
+
+    height:
+        140px;
+
+    padding:
+        0;
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    cursor:
+        pointer;
+
+    z-index:
+        30;
+
+    transform:
+        translate(-50%,-50%);
+
+    touch-action:
+        none;
+
+}
+
+
+.sky-constellation:hover {
+
+    transform:
+        translate(-50%,-50%)
+        scale(1.06);
+
+}
+
+
+.sky-constellation.own-constellation {
+
+    cursor:
+        grab;
+
+}
+
+
+.sky-constellation.own-constellation:active {
+
+    cursor:
+        grabbing;
+
+}
+
+
+.sky-constellation-shape {
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    top:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+}
+
+
+.sky-constellation-star {
+
+    position:
+        absolute;
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    border-radius:
+        50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    background:
+        white;
+
+    box-shadow:
+        0 0 8px
+        rgba(255,255,255,0.8);
+
+}
+
+
+.sky-constellation-line {
+
+    position:
+        absolute;
+
+    height:
+        1px;
+
+    transform-origin:
+        left center;
+
+    background:
+        rgba(205,195,255,0.48);
+
+}
+
+
+/* =====================================================
+   UNOPENED CONSTELLATION
+===================================================== */
+
+.sky-constellation.unopened-constellation {
+
+    animation:
+        constellationGlow 2s ease-in-out infinite;
+
+}
+
+
+.sky-constellation.unopened-constellation
+.sky-constellation-star {
+
+    box-shadow:
+        0 0 8px white,
+        0 0 15px rgba(205,190,255,0.75);
+
+}
+
+
+@keyframes constellationGlow {
+
+    0%,
+    100% {
+
+        filter:
+            brightness(1);
+
+    }
+
+
+    50% {
+
+        filter:
+            brightness(1.8)
+            drop-shadow(
+                0 0 14px
+                rgba(210,195,255,0.55)
+            );
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVED CARD WINDOW
+===================================================== */
+
+.saved-card-window {
+
+    width:
+        min(760px,94vw);
+
+    max-height:
+        92vh;
+
+    overflow-y:
+        auto;
+
+    padding:
+        30px;
+
+    border-radius:
+        30px;
+
+    position:
+        relative;
+
+    background:
+        rgba(17,17,35,0.80);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.45);
+
+    backdrop-filter:
+        blur(28px);
+
+}
+
+
+/* =====================================================
+   CARD AUTHOR
+===================================================== */
+
+.saved-card-author {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        16px;
+
+}
+
+
+.saved-card-author-image {
+
+    width:
+        40px;
+
+    height:
+        40px;
+
+    border-radius:
+        50%;
+
+    overflow:
+        hidden;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+}
+
+
+.saved-card-author-image img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+}
+
+
+.saved-card-author div:last-child {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        2px;
+
+}
+
+
+.saved-card-author small {
+
+    font-size:
+        8px;
+
+    opacity:
+        0.35;
+
+}
+
+
+.saved-card-author strong {
+
+    font-size:
+        12px;
+
+    font-weight:
+        500;
+
+}
+
+
+.saved-card-preview {
+
+    min-height:
+        540px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .studio-layout {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .preview-panel {
+
+        position:
+            sticky;
+
+        top:
+            0;
+
+        order:
+            -1;
+
+        background:
+            transparent;
+
+    }
+
+
+    .wish-preview {
+
+        min-height:
+            420px;
+
+    }
+
+
+    .constellation-layout {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .constellation-tools {
+
+        order:
+            2;
+
+    }
+
+
+    .constellation-canvas {
+
+        min-height:
+            420px;
+
+        height:
+            60vh;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .account-button {
+
+        right:
+            14px;
+
+        top:
+            14px;
+
+    }
+
+
+    .account-button-label {
+
+        display:
+            none;
+
+    }
+
+
+    .statistics {
+
+        left:
+            10px;
+
+        bottom:
+            10px;
+
+        gap:
+            7px;
+
+        padding:
+            8px 9px;
+
+    }
+
+
+    .stat-item {
+
+        min-width:
+            37px;
+
+    }
+
+
+    .stat-item span {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .stat-item small {
+
+        font-size:
+            6px;
+
+    }
+
+
+    #addWish {
+
+        width:
+            52px;
+
+        height:
+            52px;
+
+        right:
+            15px;
+
+        bottom:
+            15px;
+
+    }
+
+
+    .element-menu {
+
+        right:
+            15px;
+
+        bottom:
+            76px;
+
+        width:
+            calc(100vw - 30px);
+
+    }
+
+
+    #wishStudio,
+    .overlay-modal,
+    #constellationStudio {
+
+        padding:
+            7px;
+
+    }
+
+
+    .wish-window,
+    .account-window,
+    .constellation-window,
+    .saved-card-window {
+
+        width:
+            100%;
+
+        max-height:
+            97vh;
+
+        height:
+            auto;
+
+        padding:
+            23px 14px;
+
+        border-radius:
+            24px;
+
+    }
+
+
+    .studio-heading h1,
+    .constellation-heading h1,
+    .account-heading h1 {
+
+        font-size:
+            26px;
+
+    }
+
+
+    .reset-card-button {
+
+        right:
+            55px;
+
+        top:
+            20px;
+
+    }
+
+
+    .preview-panel {
+
+        position:
+            sticky;
+
+        top:
+            0;
+
+        z-index:
+            20;
+
+    }
+
+
+    .wish-preview {
+
+        min-height:
+            330px;
+
+        border-radius:
+            22px;
+
+    }
+
+
+    .card-title {
+
+        font-size:
+            26px;
+
+        max-width:
+            84%;
+
+    }
+
+
+    .card-body {
+
+        width:
+            84%;
+
+        font-size:
+            16px;
+
+    }
+
+
+    .card-from {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .sticker-tray {
+
+        grid-template-columns:
+            repeat(5,1fr);
+
+    }
+
+
+    .text-control-panel {
+
+        bottom:
+            8px;
+
+        max-width:
+            93%;
+
+    }
+
+
+    .text-control-panel input[type="range"] {
+
+        width:
+            65px;
+
+    }
+
+
+    .constellation-canvas {
+
+        min-height:
+            370px;
+
+        height:
+            55vh;
+
+    }
+
+
+    .saved-card-preview {
+
+        min-height:
+            390px;
+
+    }
+
+
+    .studio-footer {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-end;
+
+    }
+
+
+    .footer-text {
+
+        display:
+            none;
+
+    }
+
+
+    .saved-constellation {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .saved-constellation-actions {
+
+        flex-shrink:
+            0;
+
+    }
+
+}

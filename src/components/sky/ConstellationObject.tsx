@@ -22,7 +22,8 @@ export const ConstellationObject: React.FC<ConstellationObjectProps> = ({ wish }
   const width = Math.max(90, maxX - minX);
   const height = Math.max(90, maxY - minY);
 
-  const isUnopened = wish.unopened;
+  const { isItemOpened } = useSky();
+  const isUnopened = !isItemOpened(`wish:${wish.id}`);
   const accent = wish.accentColor || 'var(--accent-color)';
 
   return (
@@ -82,15 +83,24 @@ export const ConstellationObject: React.FC<ConstellationObjectProps> = ({ wish }
         {points.map((pt) => (
           <g key={`node-${pt.id}`} transform={`translate(${pt.x}, ${pt.y})`}>
             <circle
-              r={isUnopened ? 6 : 3}
+              r={isUnopened ? 7 : 5}
               fill={accent}
-              fillOpacity={isUnopened ? 0.5 : 0.2}
+              fillOpacity={isUnopened ? 0.22 : 0.12}
               className={isUnopened ? 'pulse-star-halo' : ''}
             />
-            <circle
-              r={isUnopened ? 3 : 1.8}
-              fill="#ffffff"
-            />
+            <text
+              x="0"
+              y="0"
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontSize={isUnopened ? 15 : 12}
+              fontFamily="system-ui, sans-serif"
+              fill={accent}
+              opacity={isUnopened ? 1 : 0.78}
+              style={{ pointerEvents: 'none', userSelect: 'none' }}
+            >
+              ✦
+            </text>
           </g>
         ))}
       </svg>

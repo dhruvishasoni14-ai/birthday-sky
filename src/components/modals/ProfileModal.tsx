@@ -46,6 +46,7 @@ export const ProfileModal: React.FC = () => {
     openVoiceNote,
     openNebula,
     openBlackHole,
+    isItemOpened,
     focusOnCoordinates
   } = useSky();
 
@@ -559,7 +560,7 @@ export const ProfileModal: React.FC = () => {
                           </strong>
 
                           <span className="creation-detail">
-                            {v.heard
+                            {isItemOpened(`voice:${v.id}`)
                               ? 'Signal Heard'
                               : 'Unopened Transmission'}
                           </span>

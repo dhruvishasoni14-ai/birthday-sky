@@ -5,7 +5,34 @@ export const app = express();
 const port = Number(process.env.PORT ?? 8787);
 const validStores = new Set(['accounts', 'wishes', 'stories', 'nebulaWords', 'voiceNotes', 'blackHoleWishes', 'discoveredStars', 'flags']);
 
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '12mb' }));
+
+app.get('/api/progress/:userId', async (req, res) => {
+  try {
+    const result = await query<{ data: { itemKey?: string; opened?: boolean } }>(
+      "SELECT data FROM app_records WHERE store_name = 'progress' AND id LIKE $1 AND COALESCE((data->>'opened')::boolean, true) = true ORDER BY updated_at ASC",
+      [`${req.params.userId}:%`]
+    );
+    res.json(result.rows.map((row) => row.data.itemKey).filter((key): key is string => typeof key === 'string'));
+  } catch (error) {
+    console.error('[api] progress load failed', error);
+    res.status(500).json({ error: error instanceof Error ? error.message : 'Unable to load progress' });
+  }
+});
+
+app.post('/api/progress/:userId/:itemKey', async (req, res) => {
+  try {
+    const userId = String(req.params.userId);
+    const itemKey = String(req.params.itemKey);
+    const opened = req.body?.opened !== false;
+    const data = { id: `${userId}:${itemKey}`, userId, itemKey, opened };
+    await saveRecord('progress', data.id, data);
+    res.json(data);
+  } catch (error) {
+    console.error('[api] progress save failed', error);
+    res.status(400).json({ error: error instanceof Error ? error.message : 'Unable to save progress' });
+  }
+});
 
 function storeName(value: unknown) {
   if (typeof value !== 'string' || !validStores.has(value)) throw new Error('Invalid store');

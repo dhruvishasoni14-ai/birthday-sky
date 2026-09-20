@@ -39,7 +39,8 @@ function createParticles(): Particle[] {
 const PARTICLE_LAYOUT = createParticles();
 
 export const NebulaObject: React.FC = () => {
-  const { openNebula, isNebulaOpened } = useSky();
+  const { openNebula, nebulaWords, isItemOpened } = useSky();
+  const isNebulaOpened = nebulaWords.length > 0 && nebulaWords.every((word) => isItemOpened(`nebula:${word.id}`));
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerRef = useRef<{ x: number; y: number } | null>(null);
   const animationRef = useRef<number>(0);

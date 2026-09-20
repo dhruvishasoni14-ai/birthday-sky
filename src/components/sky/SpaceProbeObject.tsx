@@ -7,7 +7,7 @@ interface SpaceProbeObjectProps {
 }
 
 export const SpaceProbeObject: React.FC<SpaceProbeObjectProps> = ({ probe }) => {
-  const { openVoiceNote } = useSky();
+  const { openVoiceNote, isItemOpened } = useSky();
   const [connectingState, setConnectingState] = useState<'idle' | 'connecting' | 'signal'>('idle');
 
   const handleClick = (e: React.MouseEvent) => {
@@ -29,7 +29,7 @@ export const SpaceProbeObject: React.FC<SpaceProbeObjectProps> = ({ probe }) => 
     }, 2200);
   };
 
-  const isHeard = probe.heard;
+  const isHeard = isItemOpened(`voice:${probe.id}`);
 
   return (
     <div

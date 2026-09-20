@@ -58,3 +58,5 @@ CREATE TABLE IF NOT EXISTS app_records (
 CREATE INDEX IF NOT EXISTS app_records_store_name_idx ON app_records (store_name);
 CREATE INDEX IF NOT EXISTS wish_cards_created_at_idx ON wish_cards (created_at);
 CREATE INDEX IF NOT EXISTS users_email_idx ON users (email);
+
+CREATE INDEX IF NOT EXISTS app_records_progress_idx ON app_records (store_name) WHERE store_name = 'progress';

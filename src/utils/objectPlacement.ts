@@ -10,13 +10,13 @@ export interface SkyObjectPoint {
 const SKY_BOUNDS = { minX: 8, maxX: 92, minY: 8, maxY: 92 } as const;
 
 const OBJECT_RADIUS: Record<SkyObjectKind, number> = {
-  wish: 10,
-  story: 9,
-  voice: 7,
-  secret: 5,
-  moon: 15,
-  nebula: 18,
-  'black-hole': 16
+  wish: 14,
+  story: 12,
+  voice: 10,
+  secret: 7,
+  moon: 18,
+  nebula: 22,
+  'black-hole': 20
 };
 
 const PERMANENT_OBJECTS: SkyObjectPoint[] = [
@@ -34,7 +34,7 @@ export function getSkyObjects(existing: SkyObjectPoint[] = []) {
 export function findSafeSkyPosition(
   kind: SkyObjectKind,
   existing: SkyObjectPoint[] = [],
-  attempts = 240
+  attempts = 1200
 ): { x: number; y: number } {
   const objects = getSkyObjects(existing);
   const radius = OBJECT_RADIUS[kind];
@@ -54,8 +54,8 @@ export function findSafeSkyPosition(
 
   let fallback = { x: 50, y: 50 };
   let bestScore = -Infinity;
-  for (let x = SKY_BOUNDS.minX; x <= SKY_BOUNDS.maxX; x += 4) {
-    for (let y = SKY_BOUNDS.minY; y <= SKY_BOUNDS.maxY; y += 4) {
+  for (let x = SKY_BOUNDS.minX; x <= SKY_BOUNDS.maxX; x += 2) {
+    for (let y = SKY_BOUNDS.minY; y <= SKY_BOUNDS.maxY; y += 2) {
       const candidate = { x, y, kind };
       const score = Math.min(...objects.map((object) => distance(candidate, object) - radius - (object.radius ?? OBJECT_RADIUS[object.kind])));
       if (score > bestScore) {

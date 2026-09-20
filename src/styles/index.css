@@ -637,12 +637,14 @@ body {
 ===================================================== */
 .add-menu-container {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  top: 24px;
+  left: 24px;
+  right: auto;
+  bottom: auto;
   z-index: 60;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: column-reverse;
+  align-items: flex-start;
 }
 
 .floating-add-btn {
@@ -675,7 +677,8 @@ body {
   backdrop-filter: blur(20px);
   border-radius: 18px;
   padding: 10px;
-  margin-bottom: 12px;
+  margin-top: 12px;
+  margin-bottom: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -5333,3 +5336,65 @@ video {
     grid-column: 1 / -1 !important;
   }
 }
+
+/* =========================================================
+   FINAL MOBILE / INTERACTION FIXES
+   ========================================================= */
+.progress-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-left: 3px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  cursor: pointer;
+}
+.progress-refresh-btn:hover { background: rgba(255,255,255,.13); }
+
+/* Netlify's optional injected badge should never cover the create button. */
+#netlify-badge, .netlify-badge, [data-netlify-badge] {
+  top: 16px !important;
+  left: 16px !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 80 !important;
+}
+
+.sticker-canvas-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.sticker-canvas-overlay .placed-sticker { pointer-events: auto; touch-action: none; max-width: 24%; max-height: 24%; }
+.sticker-canvas-overlay .sticker-img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+
+.card-text-box-wrapper.editable { touch-action: none; }
+
+@media (max-width: 760px) {
+  /* Wish Studio: every editable layer stays inside the preview frame. */
+  .compact-wish-card { overflow: hidden !important; }
+  .compact-wish-card .sticker-canvas-overlay { inset: 0 !important; }
+  .compact-wish-card .placed-sticker { max-width: 22% !important; max-height: 22% !important; }
+  .compact-wish-card .card-text-box-wrapper { max-width: calc(100% - 16px) !important; max-height: calc(100% - 16px) !important; }
+  .compact-wish-card .resize-handle { width: 14px; height: 14px; }
+
+  /* Planet Designer: the tool column is the scrollable part on phones. */
+  .planet-designer-window .planet-editor-layout {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .planet-designer-window .planet-tool-panel {
+    display: flex !important;
+    overflow: visible !important;
+  }
+  .planet-designer-window .planet-canvas-panel { flex: 0 0 auto; }
+  .planet-designer-window .planet-studio-actions { position: sticky; bottom: 0; z-index: 5; }
+}
+
+

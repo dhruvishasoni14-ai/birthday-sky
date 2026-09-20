@@ -9,7 +9,8 @@ interface PlanetObjectProps {
 export const PlanetObject: React.FC<PlanetObjectProps> = ({ story }) => {
   const { openStory } = useSky();
   const design = story.planetDesign;
-  const isUnopened = story.unopened;
+  const { isItemOpened } = useSky();
+  const isUnopened = !isItemOpened(`story:${story.id}`);
 
   const accentColor = design?.accentColor || 'var(--accent-color)';
 

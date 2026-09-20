@@ -19,9 +19,9 @@ export const BlackHoleModal: React.FC = () => {
     currentUser,
     addBlackHoleWish,
     blackHoleWishes,
+    markBlackHolePrayersOpened,
     setAuthNotice
   } = useSky();
-
   const [panel, setPanel] = useState<Panel>('main');
   const [wishText, setWishText] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -358,7 +358,7 @@ export const BlackHoleModal: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => setPanel('prayers')}
+                onClick={() => { markBlackHolePrayersOpened(); setPanel('prayers'); }}
                 style={{
                   minHeight: '48px',
                   borderRadius: '14px',

@@ -81,4 +81,15 @@ async function setFlag(key: string, value: boolean | number) {
   await put(STORES.flags, { id: key, value });
 }
 
-export const db = { getAll, get, put, remove, clear, getFlag, setFlag };
+async function getProgress(userId: string) {
+  return await request<string[]>(`/api/progress/${encodeURIComponent(userId)}`);
+}
+
+async function setProgress(userId: string, itemKey: string, opened = true) {
+  return await request<{ userId: string; itemKey: string; opened: boolean }>(
+    `/api/progress/${encodeURIComponent(userId)}/${encodeURIComponent(itemKey)}`,
+    { method: 'POST', body: JSON.stringify({ opened }) }
+  );
+}
+
+export const db = { getAll, get, put, remove, clear, getFlag, setFlag, getProgress, setProgress };

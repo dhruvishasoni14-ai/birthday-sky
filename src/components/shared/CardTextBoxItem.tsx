@@ -153,7 +153,7 @@ export const CardTextBoxItem: React.FC<CardTextBoxItemProps> = ({
   ]);
 
   // DRAG
-  const handleMouseDownDrag = (e: React.MouseEvent) => {
+  const handlePointerDownDrag = (e: React.PointerEvent) => {
     if (!isEditable) return;
 
     if (
@@ -177,7 +177,7 @@ export const CardTextBoxItem: React.FC<CardTextBoxItemProps> = ({
       boxY: box.y
     };
 
-    const handleMouseMove = (me: MouseEvent) => {
+    const handlePointerMove = (me: PointerEvent) => {
       if (!isDraggingRef.current) return;
 
       const dx =
@@ -213,34 +213,19 @@ export const CardTextBoxItem: React.FC<CardTextBoxItemProps> = ({
       });
     };
 
-    const handleMouseUp = () => {
+    const handlePointerUp = () => {
       isDraggingRef.current = false;
-
-      window.removeEventListener(
-        'mousemove',
-        handleMouseMove
-      );
-
-      window.removeEventListener(
-        'mouseup',
-        handleMouseUp
-      );
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
     };
 
-    window.addEventListener(
-      'mousemove',
-      handleMouseMove
-    );
-
-    window.addEventListener(
-      'mouseup',
-      handleMouseUp
-    );
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
   };
 
   // RESIZE
-  const handleMouseDownResize = (
-    e: React.MouseEvent,
+  const handlePointerDownResize = (
+    e: React.PointerEvent,
     dir: string
   ) => {
     if (!isEditable) return;
@@ -260,7 +245,7 @@ export const CardTextBoxItem: React.FC<CardTextBoxItemProps> = ({
       dir
     };
 
-    const handleMouseMove = (me: MouseEvent) => {
+    const handlePointerMove = (me: PointerEvent) => {
       if (!isResizingRef.current) return;
 
       const dx =
@@ -318,29 +303,14 @@ export const CardTextBoxItem: React.FC<CardTextBoxItemProps> = ({
       });
     };
 
-    const handleMouseUp = () => {
+    const handlePointerUp = () => {
       isResizingRef.current = false;
-
-      window.removeEventListener(
-        'mousemove',
-        handleMouseMove
-      );
-
-      window.removeEventListener(
-        'mouseup',
-        handleMouseUp
-      );
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
     };
 
-    window.addEventListener(
-      'mousemove',
-      handleMouseMove
-    );
-
-    window.addEventListener(
-      'mouseup',
-      handleMouseUp
-    );
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
   };
 
   const fontClass = `font-${box.style?.font ||
@@ -366,7 +336,7 @@ export const CardTextBoxItem: React.FC<CardTextBoxItemProps> = ({
         cursor: isEditable ? 'move' : 'default',
         zIndex: isSelected ? 12 : 10
       }}
-      onMouseDown={handleMouseDownDrag}
+      onPointerDown={(e) => { e.currentTarget.setPointerCapture?.(e.pointerId); handlePointerDownDrag(e); }}
       onClick={() =>
         isEditable && onSelect?.()
       }
@@ -428,24 +398,24 @@ export const CardTextBoxItem: React.FC<CardTextBoxItemProps> = ({
 
           <div
             className="resize-handle handle-se"
-            onMouseDown={(e) =>
-              handleMouseDownResize(e, 'se')
+            onPointerDown={(e) =>
+              handlePointerDownResize(e, 'se')
             }
             title="Resize text box"
           />
 
           <div
             className="resize-handle handle-e"
-            onMouseDown={(e) =>
-              handleMouseDownResize(e, 'e')
+            onPointerDown={(e) =>
+              handlePointerDownResize(e, 'e')
             }
             title="Resize width"
           />
 
           <div
             className="resize-handle handle-s"
-            onMouseDown={(e) =>
-              handleMouseDownResize(e, 's')
+            onPointerDown={(e) =>
+              handlePointerDownResize(e, 's')
             }
             title="Resize height"
           />

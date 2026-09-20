@@ -8,7 +8,8 @@ interface SecretStarObjectProps {
 
 export const SecretStarObject: React.FC<SecretStarObjectProps> = ({ star }) => {
   const { discoverSecretStar } = useSky();
-  const isDiscovered = star.discovered;
+  const { isItemOpened } = useSky();
+  const isDiscovered = isItemOpened(`secret:${star.id}`);
 
   return (
     <div

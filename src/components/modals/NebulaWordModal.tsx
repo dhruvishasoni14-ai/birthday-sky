@@ -3,7 +3,7 @@ import { useSky } from '../../context/SkyContext';
 import { X, Plus, ArrowLeft, User, AlertCircle } from 'lucide-react';
 
 export const NebulaWordModal: React.FC = () => {
-  const { activeModal, setActiveModal, nebulaWords, addNebulaWord, currentUser, setAuthNotice } = useSky();
+  const { activeModal, setActiveModal, nebulaWords, addNebulaWord, openNebulaWord, isItemOpened, currentUser, setAuthNotice } = useSky();
   const [isAdding, setIsAdding] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [word, setWord] = useState('');
@@ -75,7 +75,7 @@ export const NebulaWordModal: React.FC = () => {
           </article>
         ) : (
           <main className="nebula-word-list">
-            {nebulaWords.length === 0 ? <div className="nebula-empty-state"><h3>No words yet</h3><p>Be the first to describe Sum in one word.</p><button type="button" className="nebula-continue-button" onClick={openAdd}><Plus size={16} /> Add Word</button></div> : nebulaWords.map((item) => <button type="button" className="nebula-word-card" key={item.id} onClick={() => setSelectedId(item.id)}><strong>{item.word}</strong><span className="nebula-author"><Avatar src={item.creatorAvatar} name={item.creatorName} /><span>{item.creatorName}</span></span></button>)}
+            {nebulaWords.length === 0 ? <div className="nebula-empty-state"><h3>No words yet</h3><p>Be the first to describe Sum in one word.</p><button type="button" className="nebula-continue-button" onClick={openAdd}><Plus size={16} /> Add Word</button></div> : nebulaWords.map((item) => <button type="button" className="nebula-word-card" key={item.id} onClick={() => { setSelectedId(item.id); openNebulaWord(item.id); }}><strong>{item.word}</strong><span className="nebula-author"><Avatar src={item.creatorAvatar} name={item.creatorName} /><span>{item.creatorName}</span></span></button>)}
           </main>
         )}
       </section>

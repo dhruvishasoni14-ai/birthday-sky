@@ -23,10 +23,6 @@ import { findSafeSkyPosition } from '../utils/objectPlacement';
 import { db, STORES } from '../lib/db';
 
 // ── Flag keys ──────────────────────────────────────────
-const FLAG_NEBULA_OPENED     = 'nebulaOpened';
-const FLAG_BLACKHOLE_OPENED  = 'blackHoleOpened';
-const FLAG_MOON_OPENED       = 'moonOpened';
-
 // ── Legacy localStorage key (one-time migration) ───────
 const LEGACY_ACCOUNT_KEY = 'birthday-sky-accounts-v2';
 
@@ -112,6 +108,7 @@ interface SkyContextType {
 
   deleteNebulaWord: (id: string) => boolean;
   openNebula: () => void;
+  openNebulaWord: (id: string) => void;
 
   addVoiceNote: (note: VoiceNote) => void;
   openVoiceNote: (id: string) => void;
@@ -132,6 +129,9 @@ interface SkyContextType {
   ) => boolean;
 
   openBlackHole: () => void;
+  markBlackHolePrayersOpened: () => void;
+  refreshProgress: () => Promise<void>;
+  isItemOpened: (key: string) => boolean;
   openMoon: () => void;
 
   addUploadedSticker: (
@@ -273,8 +273,9 @@ export const SkyProvider: React.FC<{
   const [isBlackHoleOpened, setIsBlackHoleOpened] =
     useState(false);
 
-  const [isMoonOpened, setIsMoonOpened] =
-    useState(false);
+  const [isMoonOpened, setIsMoonOpened] = useState(false);
+  const [activeNebulaWordId, setActiveNebulaWordId] = useState<string | null>(null);
+  const [openedKeys, setOpenedKeys] = useState<Set<string>>(new Set());
 
   // ── Modal state ────────────────────────────────────
   const [activeModal, setActiveModal] =
@@ -326,21 +327,12 @@ export const SkyProvider: React.FC<{
           dbNebulaWords,
           dbVoiceNotes,
           dbBlackHoleWishes,
-          dbDiscoveredStars,
         ] = await Promise.all([
           db.getAll(STORES.wishes),
           db.getAll(STORES.stories),
           db.getAll(STORES.nebulaWords),
           db.getAll(STORES.voiceNotes),
           db.getAll(STORES.blackHoleWishes),
-          db.getAll(STORES.discoveredStars),
-        ]);
-
-        // ── Flags ──────────────────────────────────────
-        const [nebulaFlag, bhFlag, moonFlag] = await Promise.all([
-          db.getFlag(FLAG_NEBULA_OPENED),
-          db.getFlag(FLAG_BLACKHOLE_OPENED),
-          db.getFlag(FLAG_MOON_OPENED),
         ]);
 
         const validAccounts = ((accounts ?? []) as UserAccount[]).filter(
@@ -355,21 +347,13 @@ export const SkyProvider: React.FC<{
         setVoiceNotes(dbVoiceNotes as VoiceNote[]);
         setBlackHoleWishes(dbBlackHoleWishes as BlackHoleWish[]);
 
-        // Merge discovered star state into the default positions
-        if (dbDiscoveredStars.length > 0) {
-          const discoveredIds = new Set(
-            (dbDiscoveredStars as { id: string }[]).map((s) => s.id)
-          );
-          setSecretStars((prev) =>
-            prev.map((s) =>
-              discoveredIds.has(s.id) ? { ...s, discovered: true } : s
-            )
-          );
+        // Opened/discovered state is now per-account progress. Legacy global flags
+        // are intentionally ignored so one person's progress cannot affect anyone else.
+        const sessionUserId = window.localStorage.getItem('birthday-sky-current-user-id');
+        if (sessionUserId) {
+          const sessionAccount = validAccounts.find((account) => account.id === sessionUserId);
+          if (sessionAccount) setCurrentUser(sessionAccount);
         }
-
-        if (nebulaFlag)    setIsNebulaOpened(true);
-        if (bhFlag)        setIsBlackHoleOpened(true);
-        if (moonFlag)      setIsMoonOpened(true);
 
         setDbReady(true);
       } catch (err) {
@@ -382,6 +366,50 @@ export const SkyProvider: React.FC<{
     loadFromDb();
     return () => { cancelled = true; };
   }, []);
+
+  const loadProgress = useCallback(async (userId: string) => {
+    try {
+      const keys = await db.getProgress(userId);
+      setOpenedKeys(new Set(keys));
+      setIsNebulaOpened(keys.includes('moon:legacy-nebula')); // compatibility only; actual nebula words are individual keys
+      setIsBlackHoleOpened(keys.includes('blackhole'));
+      setIsMoonOpened(keys.includes('moon'));
+    } catch (error) {
+      console.error('[progress] Failed to load user progress', error);
+      setOpenedKeys(new Set());
+      setIsNebulaOpened(false);
+      setIsBlackHoleOpened(false);
+      setIsMoonOpened(false);
+    }
+  }, []);
+
+  const refreshProgress = useCallback(async () => {
+    if (!currentUser) return;
+    await loadProgress(currentUser.id);
+  }, [currentUser, loadProgress]);
+
+  useEffect(() => {
+    if (!dbReady) return;
+    if (!currentUser) {
+      setOpenedKeys(new Set());
+      setIsNebulaOpened(false);
+      setIsBlackHoleOpened(false);
+      setIsMoonOpened(false);
+      return;
+    }
+    void loadProgress(currentUser.id);
+  }, [dbReady, currentUser, loadProgress]);
+
+  const markOpened = useCallback((key: string) => {
+    setOpenedKeys((prev) => {
+      const next = new Set(prev);
+      next.add(key);
+      return next;
+    });
+    if (currentUser) db.setProgress(currentUser.id, key).catch(console.error);
+  }, [currentUser]);
+
+  const isItemOpened = useCallback((key: string) => openedKeys.has(key), [openedKeys]);
 
   // ── Camera helper ──────────────────────────────────
 
@@ -463,6 +491,7 @@ export const SkyProvider: React.FC<{
 
       setRegisteredAccounts((prev) => [...prev, newAccount]);
       setCurrentUser(newAccount);
+      window.localStorage.setItem('birthday-sky-current-user-id', newAccount.id);
       setAuthNotice(null);
 
       // Persist to DB
@@ -500,6 +529,7 @@ export const SkyProvider: React.FC<{
       }
 
       setCurrentUser(matchedAccount);
+      window.localStorage.setItem('birthday-sky-current-user-id', matchedAccount.id);
       setAuthNotice(null);
 
       return { success: true };
@@ -509,6 +539,8 @@ export const SkyProvider: React.FC<{
 
   const logout = useCallback(() => {
     setCurrentUser(null);
+    window.localStorage.removeItem('birthday-sky-current-user-id');
+    setOpenedKeys(new Set());
   }, []);
 
   // ─────────────────────────────────────────────────────
@@ -532,15 +564,7 @@ export const SkyProvider: React.FC<{
   );
 
   const openWish = (id: string) => {
-    setWishes((prev) => {
-      const next = prev.map((w) => (w.id === id ? { ...w, unopened: false } : w));
-      const updated = next.find((w) => w.id === id);
-      if (updated) {
-        db.put(STORES.wishes, updated).catch(console.error);
-      }
-      return next;
-    });
-
+    markOpened(`wish:${id}`);
     setActiveWishId(id);
     setActiveModal('wish-view');
   };
@@ -603,15 +627,7 @@ export const SkyProvider: React.FC<{
   );
 
   const openStory = (id: string) => {
-    setStories((prev) =>
-      prev.map((s) => {
-        if (s.id !== id) return s;
-        const updated = { ...s, unopened: false };
-        db.put(STORES.stories, updated).catch(console.error);
-        return updated;
-      })
-    );
-
+    markOpened(`story:${id}`);
     setActiveStoryId(id);
     setActiveModal('story-view');
   };
@@ -712,9 +728,14 @@ export const SkyProvider: React.FC<{
   );
 
   const openNebula = () => {
-    setIsNebulaOpened(true);
+    setActiveNebulaWordId(null);
     setActiveModal('nebula');
-    db.setFlag(FLAG_NEBULA_OPENED, true).catch(console.error);
+  };
+
+  const openNebulaWord = (id: string) => {
+    markOpened(`nebula:${id}`);
+    setActiveNebulaWordId(id);
+    setActiveModal('nebula');
   };
 
   // ─────────────────────────────────────────────────────
@@ -734,19 +755,13 @@ export const SkyProvider: React.FC<{
   );
 
   const openVoiceNote = (id: string) => {
+    markOpened(`voice:${id}`);
     setActiveVoiceNoteId(id);
     setActiveModal('voice-probe');
   };
 
   const markVoiceNoteHeard = (id: string) => {
-    setVoiceNotes((prev) =>
-      prev.map((v) => {
-        if (v.id !== id) return v;
-        const updated = { ...v, heard: true };
-        db.put(STORES.voiceNotes, updated).catch(console.error);
-        return updated;
-      })
-    );
+    markOpened(`voice:${id}`);
   };
 
   const deleteVoiceNote = useCallback(
@@ -774,13 +789,7 @@ export const SkyProvider: React.FC<{
   // ─────────────────────────────────────────────────────
 
   const discoverSecretStar = (id: string) => {
-    setSecretStars((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, discovered: true } : s))
-    );
-
-    // Persist discovery
-    db.put(STORES.discoveredStars, { id }).catch(console.error);
-
+    markOpened(`secret:${id}`);
     setActiveSecretStarId(id);
     setActiveModal('secret-star');
   };
@@ -866,15 +875,18 @@ export const SkyProvider: React.FC<{
   // ─────────────────────────────────────────────────────
 
   const openMoon = () => {
+    markOpened('moon');
     setIsMoonOpened(true);
     setActiveModal('moon-message');
-    db.setFlag(FLAG_MOON_OPENED, true).catch(console.error);
   };
 
   const openBlackHole = () => {
     setIsBlackHoleOpened(true);
     setActiveModal('black-hole');
-    db.setFlag(FLAG_BLACKHOLE_OPENED, true).catch(console.error);
+  };
+
+  const markBlackHolePrayersOpened = () => {
+    markOpened('blackhole:prayers');
   };
 
   // ─────────────────────────────────────────────────────
@@ -884,12 +896,15 @@ export const SkyProvider: React.FC<{
   const friendsCount = registeredAccounts.length;
 
   const unopenedCount =
-    wishes.filter((w) => w.unopened).length +
-    stories.filter((s) => s.unopened).length +
-    voiceNotes.filter((v) => !v.heard).length +
-    (isMoonOpened ? 0 : 1) +
-    (isNebulaOpened ? 0 : 1) +
-    secretStars.filter((s) => !s.discovered).length;
+    wishes.filter((w) => !isItemOpened(`wish:${w.id}`)).length +
+    stories.filter((s) => !isItemOpened(`story:${s.id}`)).length +
+    voiceNotes.filter((v) => !isItemOpened(`voice:${v.id}`)).length +
+    nebulaWords.filter((w) => !isItemOpened(`nebula:${w.id}`)).length +
+    secretStars.filter((s) => !isItemOpened(`secret:${s.id}`)).length +
+    (isItemOpened('moon') ? 0 : 1) +
+    (blackHoleWishes.length > 0 && !isItemOpened('blackhole:prayers')
+      ? blackHoleWishes.length
+      : 0);
 
   // ─────────────────────────────────────────────────────
 
@@ -938,6 +953,7 @@ export const SkyProvider: React.FC<{
         addNebulaWord,
         deleteNebulaWord,
         openNebula,
+        openNebulaWord,
 
         addVoiceNote,
         openVoiceNote,
@@ -949,6 +965,9 @@ export const SkyProvider: React.FC<{
         addBlackHoleWish,
         deleteBlackHoleWish,
         openBlackHole,
+        markBlackHolePrayersOpened,
+        refreshProgress,
+        isItemOpened,
 
         addUploadedSticker,
 

@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 
 export const AddMenu: React.FC = () => {
-  const { setActiveModal, currentUser, setAuthNotice } = useSky();
+  const { setActiveModal, setActiveVoiceNoteId, currentUser, setAuthNotice } = useSky();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (
@@ -23,6 +23,8 @@ export const AddMenu: React.FC = () => {
       | 'black-hole'
   ) => {
     setIsOpen(false);
+
+    if (modalType === 'voice-probe') setActiveVoiceNoteId(null);
 
     if (!currentUser) {
       setAuthNotice(

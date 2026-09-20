@@ -112,12 +112,14 @@ export const VoiceProbeModal: React.FC = () => {
 
     if (!file) return;
 
-    const url = URL.createObjectURL(file);
-
-    setAudioUrl(url);
-    setAudioProgress(0);
-    setAudioDuration(0);
-    setIsPlaying(false);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setAudioUrl(typeof reader.result === 'string' ? reader.result : null);
+      setAudioProgress(0);
+      setAudioDuration(0);
+      setIsPlaying(false);
+    };
+    reader.readAsDataURL(file);
 
     e.target.value = '';
   };
@@ -128,7 +130,9 @@ export const VoiceProbeModal: React.FC = () => {
         audio: true
       });
 
-      const mediaRecorder = new MediaRecorder(stream);
+      const mimeType = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4']
+        .find((type) => MediaRecorder.isTypeSupported(type));
+      const mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
 
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
@@ -141,15 +145,16 @@ export const VoiceProbeModal: React.FC = () => {
 
       mediaRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunksRef.current, {
-          type: 'audio/webm'
+          type: mediaRecorder.mimeType || 'audio/webm'
         });
-
-        const url = URL.createObjectURL(audioBlob);
-
-        setAudioUrl(url);
-        setAudioProgress(0);
-        setAudioDuration(0);
-        setIsPlaying(false);
+        const reader = new FileReader();
+        reader.onload = () => {
+          setAudioUrl(typeof reader.result === 'string' ? reader.result : null);
+          setAudioProgress(0);
+          setAudioDuration(0);
+          setIsPlaying(false);
+        };
+        reader.readAsDataURL(audioBlob);
       };
 
       mediaRecorder.start();
@@ -192,7 +197,7 @@ export const VoiceProbeModal: React.FC = () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      void audioRef.current.play().catch(() => setIsPlaying(false));
 
       if (activeNote && !activeNote.heard) {
         markVoiceNoteHeard(activeNote.id);
@@ -667,12 +672,9 @@ export const VoiceProbeModal: React.FC = () => {
                   src={audioUrl}
                   onLoadedMetadata={handleAudioLoaded}
                   onTimeUpdate={handleAudioTimeUpdate}
-                  onEnded={() => {
-                    setIsPlaying(false);
-                    setAudioProgress(0);
-                  }}
-                  onPause={() => setIsPlaying(false)}
                   onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  onEnded={() => { setIsPlaying(false); setAudioProgress(100); }}
                 />
 
                 <div

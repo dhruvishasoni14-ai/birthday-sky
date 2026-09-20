@@ -347,12 +347,23 @@ export const SkyProvider: React.FC<{
         setVoiceNotes(dbVoiceNotes as VoiceNote[]);
         setBlackHoleWishes(dbBlackHoleWishes as BlackHoleWish[]);
 
-        // Opened/discovered state is now per-account progress. Legacy global flags
-        // are intentionally ignored so one person's progress cannot affect anyone else.
+        // The opened/unopened state is intentionally session-only, exactly like
+        // the logged-out experience. Content is shared through the database,
+        // but which items have been opened is never restored after a page reload.
         const sessionUserId = window.localStorage.getItem('birthday-sky-current-user-id');
+
         if (sessionUserId) {
-          const sessionAccount = validAccounts.find((account) => account.id === sessionUserId);
-          if (sessionAccount) setCurrentUser(sessionAccount);
+          const sessionAccount = validAccounts.find(
+            (account) => account.id === sessionUserId
+          );
+
+          if (sessionAccount && !cancelled) {
+            setCurrentUser(sessionAccount);
+            setOpenedKeys(new Set());
+            setIsNebulaOpened(false);
+            setIsBlackHoleOpened(false);
+            setIsMoonOpened(false);
+          }
         }
 
         setDbReady(true);
@@ -367,38 +378,15 @@ export const SkyProvider: React.FC<{
     return () => { cancelled = true; };
   }, []);
 
-  const loadProgress = useCallback(async (userId: string) => {
-    try {
-      const keys = await db.getProgress(userId);
-      setOpenedKeys(new Set(keys));
-      setIsNebulaOpened(keys.includes('moon:legacy-nebula')); // compatibility only; actual nebula words are individual keys
-      setIsBlackHoleOpened(keys.includes('blackhole'));
-      setIsMoonOpened(keys.includes('moon'));
-    } catch (error) {
-      console.error('[progress] Failed to load user progress', error);
-      setOpenedKeys(new Set());
-      setIsNebulaOpened(false);
-      setIsBlackHoleOpened(false);
-      setIsMoonOpened(false);
-    }
-  }, []);
-
+  // Opened/unopened progress is intentionally kept only in React state.
+  // This is the same behavior as logged-out mode: it lasts for the current
+  // page session and naturally resets when the page is refreshed or reopened.
   const refreshProgress = useCallback(async () => {
-    if (!currentUser) return;
-    await loadProgress(currentUser.id);
-  }, [currentUser, loadProgress]);
-
-  useEffect(() => {
-    if (!dbReady) return;
-    if (!currentUser) {
-      setOpenedKeys(new Set());
-      setIsNebulaOpened(false);
-      setIsBlackHoleOpened(false);
-      setIsMoonOpened(false);
-      return;
-    }
-    void loadProgress(currentUser.id);
-  }, [dbReady, currentUser, loadProgress]);
+    setOpenedKeys(new Set());
+    setIsNebulaOpened(false);
+    setIsBlackHoleOpened(false);
+    setIsMoonOpened(false);
+  }, []);
 
   const markOpened = useCallback((key: string) => {
     setOpenedKeys((prev) => {
@@ -406,8 +394,7 @@ export const SkyProvider: React.FC<{
       next.add(key);
       return next;
     });
-    if (currentUser) db.setProgress(currentUser.id, key).catch(console.error);
-  }, [currentUser]);
+  }, []);
 
   const isItemOpened = useCallback((key: string) => openedKeys.has(key), [openedKeys]);
 
@@ -417,13 +404,13 @@ export const SkyProvider: React.FC<{
     (xPercent: number, yPercent: number) => {
       if (typeof window === 'undefined') return;
 
-      const viewportWidth  = window.innerWidth;
+      const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
       const legacyOrigin = 1.5;
-      const legacySize   = 3;
-      const worldOrigin  = -2.5;
-      const worldSize    = 6;
+      const legacySize = 3;
+      const worldOrigin = -2.5;
+      const worldSize = 6;
 
       const targetX =
         (worldOrigin + legacyOrigin + (xPercent / 100) * legacySize) * viewportWidth;
@@ -431,7 +418,7 @@ export const SkyProvider: React.FC<{
       const targetY =
         (worldOrigin + legacyOrigin + (yPercent / 100) * legacySize) * viewportHeight;
 
-      const viewportCenterX = viewportWidth  / 2;
+      const viewportCenterX = viewportWidth / 2;
       const viewportCenterY = viewportHeight / 2;
 
       const unclamped = {
@@ -439,8 +426,8 @@ export const SkyProvider: React.FC<{
         y: viewportCenterY - targetY,
       };
 
-      const minX = viewportWidth  - viewportWidth  * (worldSize + worldOrigin) * zoom;
-      const maxX = -viewportWidth  * worldOrigin * zoom;
+      const minX = viewportWidth - viewportWidth * (worldSize + worldOrigin) * zoom;
+      const maxX = -viewportWidth * worldOrigin * zoom;
       const minY = viewportHeight - viewportHeight * (worldSize + worldOrigin) * zoom;
       const maxY = -viewportHeight * worldOrigin * zoom;
 
@@ -491,6 +478,10 @@ export const SkyProvider: React.FC<{
 
       setRegisteredAccounts((prev) => [...prev, newAccount]);
       setCurrentUser(newAccount);
+      setOpenedKeys(new Set());
+      setIsNebulaOpened(false);
+      setIsBlackHoleOpened(false);
+      setIsMoonOpened(false);
       window.localStorage.setItem('birthday-sky-current-user-id', newAccount.id);
       setAuthNotice(null);
 
@@ -529,6 +520,10 @@ export const SkyProvider: React.FC<{
       }
 
       setCurrentUser(matchedAccount);
+      setOpenedKeys(new Set());
+      setIsNebulaOpened(false);
+      setIsBlackHoleOpened(false);
+      setIsMoonOpened(false);
       window.localStorage.setItem('birthday-sky-current-user-id', matchedAccount.id);
       setAuthNotice(null);
 
@@ -541,6 +536,9 @@ export const SkyProvider: React.FC<{
     setCurrentUser(null);
     window.localStorage.removeItem('birthday-sky-current-user-id');
     setOpenedKeys(new Set());
+    setIsNebulaOpened(false);
+    setIsBlackHoleOpened(false);
+    setIsMoonOpened(false);
   }, []);
 
   // ─────────────────────────────────────────────────────

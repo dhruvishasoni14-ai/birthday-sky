@@ -5348,16 +5348,21 @@ video {
   height: 24px;
   padding: 0;
   margin-left: 3px;
-  border: 1px solid rgba(255,255,255,.14);
+  border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 50%;
-  background: rgba(255,255,255,.06);
+  background: rgba(255, 255, 255, .06);
   color: #fff;
   cursor: pointer;
 }
-.progress-refresh-btn:hover { background: rgba(255,255,255,.13); }
+
+.progress-refresh-btn:hover {
+  background: rgba(255, 255, 255, .13);
+}
 
 /* Netlify's optional injected badge should never cover the create button. */
-#netlify-badge, .netlify-badge, [data-netlify-badge] {
+#netlify-badge,
+.netlify-badge,
+[data-netlify-badge] {
   top: 16px !important;
   left: 16px !important;
   right: auto !important;
@@ -5371,30 +5376,89 @@ video {
   overflow: hidden;
   pointer-events: none;
 }
-.sticker-canvas-overlay .placed-sticker { pointer-events: auto; touch-action: none; max-width: 24%; max-height: 24%; }
-.sticker-canvas-overlay .sticker-img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
 
-.card-text-box-wrapper.editable { touch-action: none; }
+.sticker-canvas-overlay .placed-sticker {
+  pointer-events: auto;
+  touch-action: none;
+  max-width: 24%;
+  max-height: 24%;
+}
+
+.sticker-canvas-overlay .sticker-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.card-text-box-wrapper.editable {
+  touch-action: none;
+}
 
 @media (max-width: 760px) {
+
   /* Wish Studio: every editable layer stays inside the preview frame. */
-  .compact-wish-card { overflow: hidden !important; }
-  .compact-wish-card .sticker-canvas-overlay { inset: 0 !important; }
-  .compact-wish-card .placed-sticker { max-width: 22% !important; max-height: 22% !important; }
-  .compact-wish-card .card-text-box-wrapper { max-width: calc(100% - 16px) !important; max-height: calc(100% - 16px) !important; }
-  .compact-wish-card .resize-handle { width: 14px; height: 14px; }
+  .compact-wish-card {
+    overflow: hidden !important;
+  }
+
+  .compact-wish-card .sticker-canvas-overlay {
+    inset: 0 !important;
+  }
+
+  .compact-wish-card .placed-sticker {
+    max-width: 22% !important;
+    max-height: 22% !important;
+  }
+
+  .compact-wish-card .card-text-box-wrapper {
+    max-width: calc(100% - 16px) !important;
+    max-height: calc(100% - 16px) !important;
+  }
+
+  .compact-wish-card .resize-handle {
+    width: 14px;
+    height: 14px;
+  }
 
   /* Planet Designer: the tool column is the scrollable part on phones. */
   .planet-designer-window .planet-editor-layout {
     height: auto !important;
     overflow: visible !important;
   }
+
   .planet-designer-window .planet-tool-panel {
     display: flex !important;
     overflow: visible !important;
   }
-  .planet-designer-window .planet-canvas-panel { flex: 0 0 auto; }
-  .planet-designer-window .planet-studio-actions { position: sticky; bottom: 0; z-index: 5; }
+
+  .planet-designer-window .planet-canvas-panel {
+    flex: 0 0 auto;
+  }
+
+  .planet-designer-window .planet-studio-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+  }
 }
 
+/* ---------- PHONE: FIT ALL WISH STUDIO TABS ---------- */
+@media (max-width: 760px) {
+  .compact-studio-header .studio-tab-switches {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    gap: 2px !important;
+    padding: 3px !important;
+  }
 
+  .compact-studio-header .studio-tab-pill {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 7px 4px !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+}

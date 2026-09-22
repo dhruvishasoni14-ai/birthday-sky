@@ -29,6 +29,7 @@ export const ConstellationObject: React.FC<ConstellationObjectProps> = ({ wish }
   return (
     <div
       className={`sky-constellation ${isUnopened ? 'unopened-bright' : 'opened-subtle'}`}
+      data-sky-movable="true" data-sky-kind="wish" data-sky-id={wish.id} data-sky-collidable="true"
       style={{
         position: 'absolute',
         left: `${wish.x}%`,

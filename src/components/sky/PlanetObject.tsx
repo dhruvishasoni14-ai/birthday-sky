@@ -17,6 +17,7 @@ export const PlanetObject: React.FC<PlanetObjectProps> = ({ story }) => {
   return (
     <div
       className={`sky-planet-wrapper ${isUnopened ? 'unopened-planet' : 'opened-planet'}`}
+      data-sky-movable="true" data-sky-kind="story" data-sky-id={story.id} data-sky-collidable="true"
       style={{
         position: 'absolute',
         left: `${story.x}%`,

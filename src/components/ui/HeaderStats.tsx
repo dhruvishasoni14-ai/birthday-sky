@@ -3,7 +3,7 @@ import { useSky } from '../../context/SkyContext';
 import { User, LogIn, ChevronDown } from 'lucide-react';
 
 export const HeaderStats: React.FC = () => {
-  const { currentUser, setActiveModal, setAuthMode, authNotice, setAuthNotice } = useSky();
+  const { currentUser, setActiveModal, setAuthMode, authNotice, setAuthNotice, arrangeMode, unlockArrangeMode, lockArrangeMode } = useSky();
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -25,6 +25,16 @@ export const HeaderStats: React.FC = () => {
           </button>
         </div>
       )}
+
+      <div className="header-arrange-action">
+        <button type="button" className={`arrange-mode-btn ${arrangeMode ? 'active' : ''}`} onClick={() => {
+          if (arrangeMode) { lockArrangeMode(); return; }
+          const code = window.prompt('Enter the Arrange Mode passcode:');
+          if (code !== null && !unlockArrangeMode(code)) window.alert('Incorrect passcode. Arrange Mode remains locked.');
+        }} title={arrangeMode ? 'Lock Arrange Mode' : 'Unlock Arrange Mode'}>
+          {arrangeMode ? '🔓 Arrange ON' : '🔒 Arrange'}
+        </button>
+      </div>
 
       {/* Top-Right: Authentication / Profile Button */}
       <div className="header-profile-action account-menu-wrap">

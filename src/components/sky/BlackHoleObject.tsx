@@ -281,6 +281,7 @@ export const BlackHoleObject: React.FC = () => {
   return (
     <div
       className={`sky-black-hole-wrapper ${isBlackHoleOpened ? 'opened' : 'unopened'}`}
+      data-sky-collidable="true"
       style={{
         position: 'absolute',
         left: '84%',

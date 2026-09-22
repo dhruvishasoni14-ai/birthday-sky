@@ -93,6 +93,11 @@ interface SkyContextType {
     x: number,
     y: number
   ) => boolean;
+  moveStory: (id: string, x: number, y: number) => boolean;
+  moveVoiceNote: (id: string, x: number, y: number) => boolean;
+  arrangeMode: boolean;
+  unlockArrangeMode: (passcode: string) => boolean;
+  lockArrangeMode: () => void;
 
   addStory: (story: Story) => void;
   openStory: (id: string) => void;
@@ -207,13 +212,8 @@ const COLOR_PALETTE = [
 
 /** Build the initial SecretStar array from config (positions only, no discovered state yet) */
 function buildDefaultSecretStars(): SecretStar[] {
-  const placed: { x: number; y: number; kind: 'secret' }[] = [];
-
-  return DEFAULT_SECRET_STARS.map((star) => {
-    const position = findSafeSkyPosition('secret', placed);
-    placed.push({ ...position, kind: 'secret' });
-    return { ...star, ...position };
-  });
+  // Keep the programmer-defined coordinates fixed across reloads.
+  return DEFAULT_SECRET_STARS.map((star) => ({ ...star }));
 }
 
 // ── Provider ───────────────────────────────────────────
@@ -263,6 +263,8 @@ export const SkyProvider: React.FC<{
   const [secretStars, setSecretStars] =
     useState<SecretStar[]>(buildDefaultSecretStars);
 
+  const [arrangeMode, setArrangeMode] = useState(false);
+
   const [blackHoleWishes, setBlackHoleWishes] =
     useState<BlackHoleWish[]>([]);
 
@@ -292,6 +294,15 @@ export const SkyProvider: React.FC<{
 
   const [activeSecretStarId, setActiveSecretStarId] =
     useState<string | null>(null);
+
+  const unlockArrangeMode = useCallback((passcode: string) => {
+    const configured = (import.meta.env.VITE_ARRANGE_PASSCODE as string | undefined)?.trim() || 'sky-arrange-2026';
+    const success = passcode === configured;
+    setArrangeMode(success);
+    return success;
+  }, []);
+
+  const lockArrangeMode = useCallback(() => setArrangeMode(false), []);
 
   // ── DB bootstrap: load all data on mount ───────────
   useEffect(() => {
@@ -589,24 +600,45 @@ export const SkyProvider: React.FC<{
 
   const moveWish = useCallback(
     (id: string, x: number, y: number) => {
-      if (!currentUser) return false;
-
+      if (!arrangeMode) return false;
       let moved = false;
-
-      setWishes((prev) => {
-        const item = prev.find((w) => w.id === id);
-        if (!item || item.creatorId !== currentUser.id) return prev;
-
+      setWishes((prev) => prev.map((item) => {
+        if (item.id !== id) return item;
         moved = true;
         const updated = { ...item, x, y };
         db.put(STORES.wishes, updated).catch(console.error);
-        return prev.map((w) => (w.id === id ? updated : w));
-      });
-
+        return updated;
+      }));
       return moved;
     },
-    [currentUser]
+    [arrangeMode]
   );
+
+  const moveStory = useCallback((id: string, x: number, y: number) => {
+    if (!arrangeMode) return false;
+    let moved = false;
+    setStories((prev) => prev.map((item) => {
+      if (item.id !== id) return item;
+      moved = true;
+      const updated = { ...item, x, y };
+      db.put(STORES.stories, updated).catch(console.error);
+      return updated;
+    }));
+    return moved;
+  }, [arrangeMode]);
+
+  const moveVoiceNote = useCallback((id: string, x: number, y: number) => {
+    if (!arrangeMode) return false;
+    let moved = false;
+    setVoiceNotes((prev) => prev.map((item) => {
+      if (item.id !== id) return item;
+      moved = true;
+      const updated = { ...item, x, y };
+      db.put(STORES.voiceNotes, updated).catch(console.error);
+      return updated;
+    }));
+    return moved;
+  }, [arrangeMode]);
 
   // ─────────────────────────────────────────────────────
   // STORIES
@@ -943,6 +975,11 @@ export const SkyProvider: React.FC<{
         openWish,
         deleteWish,
         moveWish,
+        moveStory,
+        moveVoiceNote,
+        arrangeMode,
+        unlockArrangeMode,
+        lockArrangeMode,
 
         addStory,
         openStory,

@@ -34,6 +34,7 @@ export const SpaceProbeObject: React.FC<SpaceProbeObjectProps> = ({ probe }) => 
   return (
     <div
       className={`sky-probe-wrapper ${isHeard ? 'probe-heard' : 'probe-unheard'}`}
+      data-sky-movable="true" data-sky-kind="voice" data-sky-id={probe.id} data-sky-collidable="true"
       style={{
         position: 'absolute',
         left: `${probe.x}%`,

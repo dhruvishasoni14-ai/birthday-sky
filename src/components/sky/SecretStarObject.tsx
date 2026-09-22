@@ -13,7 +13,7 @@ export const SecretStarObject: React.FC<SecretStarObjectProps> = ({ star }) => {
 
   return (
     <div
-      className={`secret-star-node ${isDiscovered ? 'discovered' : 'undiscovered'}`}
+      className={`secret-star-node ${isDiscovered ? 'discovered' : 'undiscovered'}`} data-sky-collidable="true"
       style={{
         position: 'absolute',
         left: `${star.x}%`,

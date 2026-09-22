@@ -7,7 +7,7 @@ export const MoonObject: React.FC = () => {
 
   return (
     <div
-      className="moon-wrapper simple-moon-interactive"
+      className="moon-wrapper simple-moon-interactive" data-sky-collidable="true"
       style={{
         position: 'absolute',
         left: '52%',

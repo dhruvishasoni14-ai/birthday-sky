@@ -71,28 +71,55 @@ export const SkyCanvas: React.FC = () => {
   });
 
   const backgroundStars = useMemo(() => generateBackgroundStars(1800), []);
-  type ArrangeDrag = { pointerId: number; element: HTMLElement; kind: 'wish'|'story'|'voice'; id: string; startX: number; startY: number; originalRect: DOMRect; layerRect: DOMRect; originalTransform: string };
+  type ArrangeDrag = { pointerId: number; element: HTMLElement; kind: 'wish' | 'story' | 'voice'; id: string; startX: number; startY: number; originalRect: DOMRect; layerRect: DOMRect; originalTransform: string };
   const arrangeDragRef = useRef<ArrangeDrag | null>(null);
 
-  const collisionFree = (rect: {left:number;top:number;right:number;bottom:number}, dragged: HTMLElement) =>
+  const collisionFree = (rect: { left: number; top: number; right: number; bottom: number }, dragged: HTMLElement) =>
     Array.from(document.querySelectorAll<HTMLElement>('[data-sky-collidable="true"]')).filter(el => el !== dragged).every(el => {
       const r = el.getBoundingClientRect();
       return rect.right <= r.left || rect.left >= r.right || rect.bottom <= r.top || rect.top >= r.bottom;
     });
 
   const finishArrangeDrag = (commit: boolean, clientX?: number, clientY?: number) => {
-    const d = arrangeDragRef.current; if (!d) return;
-    const dx = clientX == null ? 0 : clientX - d.startX, dy = clientY == null ? 0 : clientY - d.startY;
-    const rect = {left:d.originalRect.left+dx, top:d.originalRect.top+dy, right:d.originalRect.right+dx, bottom:d.originalRect.bottom+dy};
-    const valid = commit && collisionFree(rect, d.element);
+    const d = arrangeDragRef.current;
+    if (!d) return;
+
+    const dx = clientX == null ? 0 : clientX - d.startX;
+    const dy = clientY == null ? 0 : clientY - d.startY;
+
+    const rect = {
+      left: d.originalRect.left + dx,
+      top: d.originalRect.top + dy,
+      right: d.originalRect.right + dx,
+      bottom: d.originalRect.bottom + dy
+    };
+
+    const valid = commit;
+
     d.element.style.transform = d.originalTransform;
-    d.element.classList.remove('sky-arranging','sky-arrange-invalid');
+    d.element.classList.remove('sky-arranging', 'sky-arrange-invalid');
+
     if (valid) {
-      const cx = (rect.left+rect.right)/2, cy = (rect.top+rect.bottom)/2;
-      const x = Math.max(4, Math.min(96, ((cx-d.layerRect.left)/d.layerRect.width)*100));
-      const y = Math.max(4, Math.min(96, ((cy-d.layerRect.top)/d.layerRect.height)*100));
-      if (d.kind === 'wish') moveWish(d.id,x,y); else if (d.kind === 'story') moveStory(d.id,x,y); else moveVoiceNote(d.id,x,y);
+      const cx = (rect.left + rect.right) / 2;
+      const cy = (rect.top + rect.bottom) / 2;
+
+      // Convert the final screen position directly back to the
+      // existing legacy-sky-layer percentage coordinate system.
+      const x = ((cx - d.layerRect.left) / d.layerRect.width) * 100;
+      const y = ((cy - d.layerRect.top) / d.layerRect.height) * 100;
+
+      const safeX = x;
+      const safeY = y;
+
+      if (d.kind === 'wish') {
+        moveWish(d.id, safeX, safeY);
+      } else if (d.kind === 'story') {
+        moveStory(d.id, safeX, safeY);
+      } else {
+        moveVoiceNote(d.id, safeX, safeY);
+      }
     }
+
     arrangeDragRef.current = null;
   };
 
@@ -100,20 +127,20 @@ export const SkyCanvas: React.FC = () => {
     if (!arrangeMode || e.button !== 0) return;
     const target = e.target as HTMLElement, el = target.closest<HTMLElement>('[data-sky-movable="true"]');
     if (!el) return;
-    const kind = el.dataset.skyKind as ArrangeDrag['kind']|undefined, id = el.dataset.skyId;
+    const kind = el.dataset.skyKind as ArrangeDrag['kind'] | undefined, id = el.dataset.skyId;
     const layer = document.querySelector<HTMLElement>('.legacy-sky-layer');
     if (!kind || !id || !layer) return;
     e.preventDefault(); e.stopPropagation();
-    arrangeDragRef.current = {pointerId:e.pointerId,element:el,kind,id,startX:e.clientX,startY:e.clientY,originalRect:el.getBoundingClientRect(),layerRect:layer.getBoundingClientRect(),originalTransform:el.style.transform};
+    arrangeDragRef.current = { pointerId: e.pointerId, element: el, kind, id, startX: e.clientX, startY: e.clientY, originalRect: el.getBoundingClientRect(), layerRect: layer.getBoundingClientRect(), originalTransform: el.style.transform };
     el.setPointerCapture?.(e.pointerId); el.classList.add('sky-arranging');
   };
   const onArrangePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const d=arrangeDragRef.current; if (!d || d.pointerId!==e.pointerId) return;
+    const d = arrangeDragRef.current; if (!d || d.pointerId !== e.pointerId) return;
     e.preventDefault(); e.stopPropagation();
-    const dx=e.clientX-d.startX,dy=e.clientY-d.startY,rect={left:d.originalRect.left+dx,top:d.originalRect.top+dy,right:d.originalRect.right+dx,bottom:d.originalRect.bottom+dy};
-    d.element.style.transform=`translate(-50%, -50%) translate(${dx}px, ${dy}px)`; d.element.classList.toggle('sky-arrange-invalid',!collisionFree(rect,d.element));
+    const dx = e.clientX - d.startX, dy = e.clientY - d.startY, rect = { left: d.originalRect.left + dx, top: d.originalRect.top + dy, right: d.originalRect.right + dx, bottom: d.originalRect.bottom + dy };
+    d.element.style.transform = `translate(-50%, -50%) translate(${dx}px, ${dy}px)`; d.element.classList.toggle('sky-arrange-invalid', !collisionFree(rect, d.element));
   };
-  const onArrangePointerUp = (e: React.PointerEvent<HTMLDivElement>) => { if(!arrangeDragRef.current)return; e.preventDefault();e.stopPropagation();finishArrangeDrag(true,e.clientX,e.clientY); };
+  const onArrangePointerUp = (e: React.PointerEvent<HTMLDivElement>) => { if (!arrangeDragRef.current) return; e.preventDefault(); e.stopPropagation(); finishArrangeDrag(true, e.clientX, e.clientY); };
   const onArrangePointerCancel = () => finishArrangeDrag(false);
 
   const clampPan = (next: { x: number; y: number }, nextZoom = zoom) => {

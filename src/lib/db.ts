@@ -43,7 +43,9 @@ async function getAll<T>(store: StoreName): Promise<T[]> {
     `/api/records/${encodeURIComponent(store)}`,
   );
 }
-
+async function getStoryIds(): Promise<string[]> {
+  return request<string[]>('/api/records/stories/ids');
+}
 async function get<T>(
   store: StoreName,
   id: string,
@@ -177,6 +179,7 @@ async function resetProgress(
 
 export const db = {
   getAll,
+  getStoryIds,
   get,
   put,
   remove,

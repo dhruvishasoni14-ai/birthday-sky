@@ -306,7 +306,26 @@ app.delete('/api/wishes/:id', async (req, res) => {
     });
   }
 });
+app.get('/api/records/stories/ids', async (_req, res) => {
+  try {
+    const result = await query<{ id: string }>(
+      `SELECT id
+       FROM app_records
+       WHERE store_name = 'stories'
+       ORDER BY created_at ASC`,
+    );
 
+    res.json(result.rows.map((row) => row.id));
+  } catch (error) {
+    console.error('[api] list story ids failed', error);
+    res.status(400).json({
+      error:
+        error instanceof Error
+          ? error.message
+          : 'Unable to list story ids',
+    });
+  }
+});
 /* =========================
    GENERIC RECORDS
    ========================= */

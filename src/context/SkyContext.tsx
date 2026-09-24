@@ -343,17 +343,31 @@ export const SkyProvider: React.FC<{
 
         const [
           dbWishes,
-          dbStories,
           dbNebulaWords,
           dbVoiceNotes,
           dbBlackHoleWishes,
         ] = await Promise.all([
           loadStore<WishCard>(STORES.wishes),
-          loadStore<Story>(STORES.stories),
           loadStore<NebulaWordEntry>(STORES.nebulaWords),
           loadStore<VoiceNote>(STORES.voiceNotes),
           loadStore<BlackHoleWish>(STORES.blackHoleWishes),
         ]);
+
+        let dbStories: Story[] = [];
+
+        try {
+          const storyIds = await db.getStoryIds();
+
+          const loadedStories = await Promise.all(
+            storyIds.map((id) => db.get<Story>(STORES.stories, id))
+          );
+
+          dbStories = loadedStories.filter(
+            (story): story is Story => Boolean(story)
+          );
+        } catch (error) {
+          console.error('[db] Failed to load stories individually:', error);
+        }
 
         const validAccounts = ((accounts ?? []) as UserAccount[]).filter(
           (a) => a && typeof a === 'object' && typeof a.username === 'string'

@@ -332,6 +332,15 @@ export const SkyProvider: React.FC<{
         }
 
         // ── Content collections ────────────────────────
+        const loadStore = async <T,>(store: typeof STORES[keyof typeof STORES]): Promise<T[]> => {
+          try {
+            return await db.getAll<T>(store);
+          } catch (error) {
+            console.error(`[db] Failed to load ${store}:`, error);
+            return [];
+          }
+        };
+
         const [
           dbWishes,
           dbStories,
@@ -339,11 +348,11 @@ export const SkyProvider: React.FC<{
           dbVoiceNotes,
           dbBlackHoleWishes,
         ] = await Promise.all([
-          db.getAll(STORES.wishes),
-          db.getAll(STORES.stories),
-          db.getAll(STORES.nebulaWords),
-          db.getAll(STORES.voiceNotes),
-          db.getAll(STORES.blackHoleWishes),
+          loadStore<WishCard>(STORES.wishes),
+          loadStore<Story>(STORES.stories),
+          loadStore<NebulaWordEntry>(STORES.nebulaWords),
+          loadStore<VoiceNote>(STORES.voiceNotes),
+          loadStore<BlackHoleWish>(STORES.blackHoleWishes),
         ]);
 
         const validAccounts = ((accounts ?? []) as UserAccount[]).filter(
